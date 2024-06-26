@@ -1,0 +1,9 @@
+파일 업로드 문제 1번 문제
+
+1. 어떻게 풀었는지
+
+버프스위트에서 php 파일의 content-type을 image/png로 바꿔줌
+
+2. 정답
+
+contenttype

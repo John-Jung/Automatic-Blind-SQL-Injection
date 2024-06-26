@@ -1,0 +1,47 @@
+SSRF 2번 문제
+
+1. 문제 풀이과정
+
+https://elms2.skinfosec.co.kr:8099/ssrf_2/admin_login.php 확인
+
+adminID, adminPW 실패
+
+HINT -> img 태그를 불러온다
+
+https://elms2.skinfosec.co.kr:8099/ssrf_2/admin_login.php 접속
+
+
+
+--main.php 조회 이후--
+
+<?php header("Content-Type: text/html; charset=UTF-8");?>
+<?php include_once "include/common/declare.php";?>
+<?php include_once "../request_log_ssrf2.php";?>
+
+declare.php 조회 -> 없음
+
+
+common/declare.php 조회 -> O
+
+<?php
+	include_once "include/common/property.php";
+	include_once "include/common/class.db.php";
+	include_once "include/common/common.function.php";
+?>
+
+
+---include/common/class.db.php 조회---
+
+DB: ssrf_user, ssrf12#$
+		
+
+---admin.php 조회 ---
+
+adminuser 
+adminpassword
+
+2. 정답
+
+wow_you_got_db?
+
+

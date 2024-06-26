@@ -1,0 +1,83 @@
+JS 분석 쇼핑몰 문제 15번 
+
+1. 어떻게 풀었는지
+
+포인트 찾기 couponValidation을 찾는다
+
+분석결과: 1) 쿠폰 길이는 15
+        2) 쿠폰 접두오 Eqst 
+        3) 쿠폰은  prefix + couponfront +couponmiddle + " ? " + md5hash 형식이란걸 알 수 있음
+        
+2. 버프스위트 매치앤 리플레이스 기능을 이용해서 쿠폰확인버튼을 누를때마다
+prefix + couponfront + couponmiddle + " ? " + md5hash값을 알수있도록
+alert(prefix + couponfront + couponmiddle + " ? " + md5hash)를 넣어줌.
+
+
+function couponValidation() {
+    var memberid = $('#memberid').val();
+    var md5hash = $('#md5hash').val();
+    var couponNum = $('#couponnum').val();
+    var charSet = ["S", "e", "y", "o", "n", "g", "-", "K", "i", "m"];
+    var prefix = "Eqst";
+    var time = Math.floor(new Date().getTime() / 1000000 % 10000).toString()
+    var couponfront = "";
+    var couponmiddle = "";
+    for (i = 0; i < time.length; i++) {
+        couponfront += charSet[Number(time[i])];
+    }
+
+    var asciisum = 810;
+
+    for (i = 0; i < memberid.length; i++) {
+        asciisum += memberid.charCodeAt(i);
+    }
+
+    asciisum = String(asciisum).padStart(4, '0');
+    for (i = 0; i < asciisum.length; i++) {
+        couponmiddle += charSet[Number(asciisum[i])];
+    }
+
+    if (couponNum == "") {
+        $('#couponerror').text("쿠폰 번호를 입력하세요.");
+        return false;
+    }
+    if (couponNum.length != 15) {
+        $('#couponerror').text("쿠폰 번호 길이가 맞지 않습니다.");
+        return false;
+    }
+
+    var inputmd5 = MD5(couponNum.substr(0,13)).substr(0,2);
+
+    var split = 4;alert(prefix + couponfront + couponmiddle + " ? " + md5hash);
+    if (couponNum.substring(0, split) == prefix) {
+        if (couponNum.substring(split * 2, split * 3) == couponmiddle) {
+            if (couponNum.substring(split * 1, split * 2) == couponfront) {
+                if (couponNum.substr(split * 3 + 1, 2) == md5hash) {
+                    if (inputmd5 == md5hash) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+
+var split = 4;
+
+을
+
+**var split = 4;alert(prefix + couponfront + couponmiddle + " ? " + md5hash)로 match and replace로 설정
+
+**response body로!!!
+
+3. 나온값: Eqstmyeieoom? b9
+
+b9 는 V
+
+EqstmyeieoomVb9
+
+
+
+
+2. 정답
+

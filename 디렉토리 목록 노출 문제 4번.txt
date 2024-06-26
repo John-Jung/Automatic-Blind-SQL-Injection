@@ -1,0 +1,19 @@
+정보노출 문제 4번
+
+1. 정보를 어디서 어떻게 찾았는 지:
+
+로그인 페이지 소스 코드
+
+			<a href="./user/index.php">USER</a>
+			<a href="./admin/index.php">ADMIN</a>
+			<a href="./join/index.php">JOIN</a>
+			<a href="./error/index.php">ERROR</a>
+			<a href="./CODE/index.php">CODE</a>
+
+2. 정답을 확인할 수 있는 URL:
+
+./error/index.php
+
+3. 정답
+
+error

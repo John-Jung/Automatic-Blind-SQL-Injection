@@ -1,0 +1,10 @@
+쇼핑몰 10번
+
+1. 어떻게 풀었는지
+
+reponse를 intercept 해서 totalprice태그의 값을 100으로 변경 후 forward
+
+
+2. 정답
+
+payment_with_eqstpay

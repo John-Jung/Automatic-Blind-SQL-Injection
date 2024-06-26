@@ -1,0 +1,20 @@
+쇼핑몰 13번
+
+1. 어떻게 풀었는지
+
+글 작성 후 수정에서 &writerid=224로 변경 하면 admin으로 변경 됨
+
+삭제 URL : 
+
+https://elms2.skinfosec.co.kr:8110/practice/practice13/qna/removebyid?id=8901
+
+생성한 관리자 게시물
+https://elms2.skinfosec.co.kr:8110/practice/practice13/qna/view?id=8894&page=0
+                                                            ~~~~id 확인~~~
+
+
+https://elms2.skinfosec.co.kr:8110/practice/practice13/qna/removebyid?id=8894
+
+2. 정답
+
+writerid_in_notice_view

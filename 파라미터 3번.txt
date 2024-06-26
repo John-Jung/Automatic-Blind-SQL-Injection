@@ -1,0 +1,12 @@
+파라미터 3번
+
+1. 어떻게 풀었는지
+
+게시판 화면에서  <div style="display:none;" class="btn_basic01" onClick="noticewrite('Y');">등록</div> 태그에
+
+display:none을 삭제
+onClick="noticewrite('N') -> onClick="noticewrite('Y') 로 수정
+
+2. 정답
+
+javascript_method

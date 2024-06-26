@@ -1,0 +1,12 @@
+JS 분석 쇼핑몰 문제 6번 
+
+1. 어떻게 풀었는지
+
+
+회원 탈퇴 페이지에서 encryptMemberid('admin') 을 콘솔로 입력하여 'U2FsdGVkX18lWsRzRWLkJwi87uaDpqDrOp1Y0vWFPy8=' 확인
+
+버프로 인터셉트 후 id 파라미터 값을 위 값으로 변경 후 forward
+
+2. 정답
+
+parameter_encryption

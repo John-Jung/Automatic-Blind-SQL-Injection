@@ -1,0 +1,35 @@
+파일 업로드 7번
+
+jsp 업로드가 안됨 jspx로 업로드 해야함
+
+파일 경로 확인
+
+jspx 웹셀을 올릴때 input 태그를 gpt로 만들어 줌
+
+웹셀 경로
+https://elms1.skinfosec.co.kr:8091/data/download.jsp?filePath=/files/qna/20240620/&fileName=2746ea49-a84f-4005-adfb-8d3e7322189d.jspx&orgFileName=pqpqp.jspx
+
+https://elms1.skinfosec.co.kr:8091/data/files/qna/20240620/2746ea49-a84f-4005-adfb-8d3e7322189d.jspx
+
+현재 위치 : /usr/local/tomcat
+
+명령어:
+ls /usr/local/tomcat/webapps
+
+ls /usr/local/tomcat/webapps/docs -> 없음
+
+ls /usr/local/tomcat/webapps/examples/WEB-INF/jsp -> 없음
+
+ls /usr/local/tomcat/webapps/examples/WEB-INF/jsp/applet -> 없음
+
+ls /usr/local/tomcat/webapps/host-manager -> 없음
+
+ls /usr/local/tomcat/webapps/manager -> 없음
+
+ls /usr/local/tomcat/webapps/new_board/TO_DO.txt
+
+2. 정답
+
+jspx_is_too_bad
+
+

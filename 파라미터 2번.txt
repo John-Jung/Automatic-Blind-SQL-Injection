@@ -1,0 +1,12 @@
+파라미터 2번
+
+1. 어떻게 풀었는지
+login@eqst.com / infosec123 으로 로그인 시도하고 intercept로 설정
+
+{result:'NC'} -> {result:'Y'}
+
+로 변경 후 forward
+
+2. 정답
+
+eqst_loginanswer 

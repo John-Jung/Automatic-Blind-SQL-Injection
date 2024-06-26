@@ -1,0 +1,12 @@
+JS 분석 쇼핑몰 문제 5번 
+
+1. 어떻게 풀었는지
+콘솔창에서 inputCheck.js 파일에서 if 문, else if 문을 지우고 콘솔창으로 다시 입력
+
+입력 후 회원가입 시도
+
+2. 정답
+
+javascript_filtering
+
+

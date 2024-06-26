@@ -1,0 +1,14 @@
+쇼핑몰 7번
+
+1. 어떻게 풀었는지
+개발자도구를 사용해 포인트 태그의 아이디를 확인
+
+<input type="text" class="form-control" id="setpoint" placeholder="" value="2000" readonly="">
+
+버프스위트로 파라미터 값을 &setpoint=99999로 전송
+
+
+2. 정답
+
+point_of_no_return
+

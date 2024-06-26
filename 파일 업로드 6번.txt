@@ -1,0 +1,21 @@
+파일 업로드 6번
+
+1. 문제 풀이 순서 정리
+
+파일 경로 확인
+
+웹셀 경로
+
+https://elms1.skinfosec.co.kr:8090/data/download.jsp?filePath=/files/qna/20240620/&fileName=5a618bee-a96f-4343-9bcc-b1055c65d349.jsp&orgFileName=zzz.jsp
+
+알맞은 URL : 
+https://elms1.skinfosec.co.kr:8090/data/files/qna/20240620/5a618bee-a96f-4343-9bcc-b1055c65d349.jsp
+
+
+
+
+2. 정답
+
+webshell_is_bad
+
+

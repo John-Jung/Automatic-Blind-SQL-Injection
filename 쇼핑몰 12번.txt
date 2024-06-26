@@ -1,0 +1,23 @@
+쇼핑몰 12번
+
+1. 어떻게 풀었는지
+
+qna 에서 글 작성 URL 
+
+https://elms2.skinfosec.co.kr:8110/practice/practice12/qna/write 
+
+https://elms2.skinfosec.co.kr:8110/practice/practice12/notice/write 
+
+라고 유추
+
+마찬가지 삭제 URL
+https://elms2.skinfosec.co.kr:8110/practice/practice12/qna/deletebyid?id=8728
+
+가지고 유추
+
+https://elms2.skinfosec.co.kr:8110/practice/practice12/notice/deletebyid?id=3712
+                                                                 ~~~~생성한 공지사항 번호~~~
+
+2. 정답
+
+authority_and_authentication

